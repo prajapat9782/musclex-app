@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MuscleX · Profile setup</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{vars}} width: 390px; height: 844px; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; overflow: hidden">
+  <div style="padding: 52px 24px 0; display: flex; flex-direction: column; gap: 18px; flex-shrink: 0">
+    <div style="display: flex; align-items: center; gap: 12px">
+      <sc-if value="{{isFirst}}" hint-placeholder-val="{{ true }}">
+        <a href="SignUp.dc.html" aria-label="Back" style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); color: var(--text); display: flex; align-items: center; justify-content: center">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        </a>
+      </sc-if>
+      <sc-if value="{{notFirst}}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{back}}" aria-label="Back" style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); color: var(--text); display: flex; align-items: center; justify-content: center; cursor: pointer">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+      </sc-if>
+      <div style="flex: 1; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px">
+        <sc-for list="{{bars}}" as="b" hint-placeholder-count="6">
+          <div style="{{b}}"></div>
+        </sc-for>
+      </div>
+      <span style="font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap">{{step}} / 6</span>
+    </div>
+  </div>
+
+  <div style="flex: 1; overflow-y: auto; padding: 28px 24px 24px; display: flex; flex-direction: column; gap: 24px">
+
+    <sc-if value="{{s1}}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: 24px">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -1px">Let’s get to know you</h1>
+          <p style="margin: 0; font-size: 15px; line-height: 1.45; color: var(--muted)">We use this to calculate your calories. You can change it anytime.</p>
+        </div>
+        <label style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted)">What should we call you?
+          <input type="text" value="{{name}}" onChange="{{onName}}" placeholder="Your first name" autocomplete="given-name" style="height: 56px; padding: 0 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font-size: 17px; font-family: inherit; outline: none">
+        </label>
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 13px; font-weight: 600; color: var(--muted)">Sex (for calorie formula)</span>
+          <div role="group" aria-label="Sex" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+            <sc-for list="{{sexes}}" as="o" hint-placeholder-count="2">
+              <button onClick="{{o.pick}}" aria-pressed="{{o.on}}" style="{{o.style}}">{{o.label}}</button>
+            </sc-for>
+          </div>
+        </div>
+        <sc-for list="{{aboutSteppers}}" as="st" hint-placeholder-count="1">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 14px 14px 18px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line)">
+            <div style="display: flex; flex-direction: column; gap: 2px">
+              <span style="font-size: 13px; font-weight: 600; color: var(--muted)">{{st.label}}</span>
+              <span style="font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700">{{st.display}} <span style="font-size: 15px; color: var(--muted); font-weight: 500">{{st.unit}}</span></span>
+            </div>
+            <div style="display: flex; gap: 8px">
+              <button onClick="{{st.dec}}" aria-label="{{st.decLabel}}" style="width: 48px; height: 48px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface2); color: var(--text); font-size: 22px; font-weight: 600; cursor: pointer; font-family: inherit">−</button>
+              <button onClick="{{st.inc}}" aria-label="{{st.incLabel}}" style="width: 48px; height: 48px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface2); color: var(--text); font-size: 22px; font-weight: 600; cursor: pointer; font-family: inherit">+</button>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s2}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -1px">Your body today</h1>
+          <p style="margin: 0; font-size: 15px; line-height: 1.45; color: var(--muted)">Your starting point. Progress is measured from here.</p>
+        </div>
+        <div role="group" aria-label="Units" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; padding: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px">
+          <sc-for list="{{unitOpts}}" as="u" hint-placeholder-count="2">
+            <button onClick="{{u.pick}}" aria-pressed="{{u.on}}" style="{{u.style}}">{{u.label}}</button>
+          </sc-for>
+        </div>
+        <sc-for list="{{bodySteppers}}" as="st" hint-placeholder-count="3">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 14px 14px 18px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line)">
+            <div style="display: flex; flex-direction: column; gap: 2px">
+              <span style="font-size: 13px; font-weight: 600; color: var(--muted)">{{st.label}}</span>
+              <span style="font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700">{{st.display}} <span style="font-size: 15px; color: var(--muted); font-weight: 500">{{st.unit}}</span></span>
+            </div>
+            <div style="display: flex; gap: 8px">
+              <button onClick="{{st.dec}}" aria-label="{{st.decLabel}}" style="width: 48px; height: 48px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface2); color: var(--text); font-size: 22px; font-weight: 600; cursor: pointer; font-family: inherit">−</button>
+              <button onClick="{{st.inc}}" aria-label="{{st.incLabel}}" style="width: 48px; height: 48px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface2); color: var(--text); font-size: 22px; font-weight: 600; cursor: pointer; font-family: inherit">+</button>
+            </div>
+          </div>
+        </sc-for>
+        <div style="padding: 14px 16px; border-radius: 16px; background: var(--accentSoft); font-size: 14px; line-height: 1.45">BMI <strong>{{bmi}}</strong> · {{toTarget}}</div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s3}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 14px">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -1px">What’s your goal?</h1>
+          <p style="margin: 0; font-size: 15px; line-height: 1.45; color: var(--muted)">This sets your calories, protein and training focus.</p>
+        </div>
+        <sc-for list="{{goals}}" as="g" hint-placeholder-count="5">
+          <button onClick="{{g.pick}}" aria-pressed="{{g.on}}" style="{{g.style}}">
+            <div style="display: flex; flex-direction: column; gap: 4px; flex: 1; text-align: left">
+              <span style="font-size: 16px; font-weight: 700; color: var(--text)">{{g.label}}</span>
+              <span style="font-size: 13px; line-height: 1.4; color: var(--muted)">{{g.desc}}</span>
+            </div>
+            <div style="{{g.dot}}"></div>
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s4}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 22px">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -1px">How do you train?</h1>
+          <p style="margin: 0; font-size: 15px; line-height: 1.45; color: var(--muted)">Your daily activity outside the gym matters too.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 13px; font-weight: 600; color: var(--muted)">Daily activity</span>
+          <sc-for list="{{activities}}" as="a" hint-placeholder-count="5">
+            <button onClick="{{a.pick}}" aria-pressed="{{a.on}}" style="{{a.style}}">
+              <span style="font-size: 15px; font-weight: 600; color: var(--text)">{{a.label}}</span>
+              <span style="font-size: 12px; color: var(--muted)">{{a.desc}}</span>
+            </button>
+          </sc-for>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 13px; font-weight: 600; color: var(--muted)">Experience</span>
+          <div role="group" aria-label="Experience" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+            <sc-for list="{{levels}}" as="l" hint-placeholder-count="3">
+              <button onClick="{{l.pick}}" aria-pressed="{{l.on}}" style="{{l.style}}">{{l.label}}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 13px; font-weight: 600; color: var(--muted)">Workouts per week</span>
+          <div role="group" aria-label="Workouts per week" style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px">
+            <sc-for list="{{days}}" as="d" hint-placeholder-count="6">
+              <button onClick="{{d.pick}}" aria-pressed="{{d.on}}" style="{{d.style}}">{{d.label}}</button>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s5}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -1px">Stay in the know</h1>
+          <p style="margin: 0; font-size: 15px; line-height: 1.45; color: var(--muted)">Pick the gym &amp; health news you care about. We’ll save it for your feed.</p>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <span style="font-size: 13px; font-weight: 600; color: var(--muted)">{{topicCount}} selected</span>
+          <button onClick="{{toggleAll}}" style="height: 44px; padding: 0 4px; border: 0; background: transparent; color: var(--accentInk); font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit">{{allLabel}}</button>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+          <sc-for list="{{topics}}" as="t" hint-placeholder-count="8">
+            <button onClick="{{t.toggle}}" aria-pressed="{{t.on}}" style="{{t.style}}">
+              <span style="font-size: 15px; font-weight: 600; color: var(--text)">{{t.label}}</span>
+              <span style="{{t.check}}">
+                <sc-if value="{{t.on}}" hint-placeholder-val="{{ true }}">
+                  <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>
+                </sc-if>
+              </span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s6}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -1px">{{planTitle}}</h1>
+          <p style="margin: 0; font-size: 15px; line-height: 1.45; color: var(--muted)">Built from your answers. Adjust anytime in Profile.</p>
+        </div>
+        <div style="background: var(--accent); color: var(--onAccent); border-radius: 24px; padding: 20px; display: flex; flex-direction: column; gap: 6px">
+          <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px">Daily calories · {{goalLabel}}</span>
+          <span style="font-family: 'Space Grotesk', sans-serif; font-size: 52px; font-weight: 700; line-height: 1; letter-spacing: -2px">{{kcal}}</span>
+          <span style="font-size: 13px; font-weight: 500">Maintenance {{tdee}} kcal · BMR {{bmr}} kcal</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+          <div style="padding: 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 12px; color: var(--muted)">Protein</span>
+            <span style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">{{protein}} g</span>
+          </div>
+          <div style="padding: 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 12px; color: var(--muted)">Carbs</span>
+            <span style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">{{carbs}} g</span>
+          </div>
+          <div style="padding: 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 12px; color: var(--muted)">Fat</span>
+            <span style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">{{fat}} g</span>
+          </div>
+        </div>
+        <div style="padding: 16px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; gap: 12px; align-items: flex-start">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 1px; color: var(--accentInk)"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <span style="font-size: 14px; line-height: 1.45">{{timeline}}</span>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: flex-start">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex-shrink: 0; margin-top: 1px; color: var(--accentInk)"><path d="M6 7v10M18 7v10M3 10v4M21 10v4M6 12h12"/></svg>
+            <span style="font-size: 14px; line-height: 1.45">{{split}}</span>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: flex-start">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 1px; color: var(--accentInk)"><path d="M12 3v3M12 18v3M4 12H2M22 12h-2"/><circle cx="12" cy="12" r="5"/></svg>
+            <span style="font-size: 14px; line-height: 1.45">Daily habits: {{water}} L water, 8 h sleep, {{protein}} g protein, 10,000 steps</span>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+
+  <div style="padding: 12px 24px 36px; flex-shrink: 0">
+    <sc-if value="{{notLast}}" hint-placeholder-val="{{ true }}">
+      <button onClick="{{next}}" style="width: 100%; height: 56px; border-radius: 16px; border: 0; background: var(--accent); color: var(--onAccent); font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit">Continue</button>
+    </sc-if>
+    <sc-if value="{{s6}}" hint-placeholder-val="{{ false }}">
+      <a href="HomeNew.dc.html" onClick="{{save}}" style="height: 56px; border-radius: 16px; background: var(--accent); color: var(--onAccent); font-size: 16px; font-weight: 700; text-decoration: none; display: flex; align-items: center; justify-content: center">Start training</a>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"startStep":{"editor":"enum","options":["1","2","3","4","5","6"],"default":"1"},"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"accent":{"editor":"color","default":"#C6F432","options":["#C6F432","#FF8A4C","#7CC8FF","#E9B8FF"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    let saved = {};
+    try { saved = JSON.parse(window.localStorage.getItem('musclex.profile') || '{}') || {}; } catch (e) { saved = {}; }
+    const allTopics = ['Training', 'Nutrition', 'Research', 'Recovery', 'Supplements', 'Events', 'Gear', 'Mindset'];
+    this.allTopics = allTopics;
+    this.state = Object.assign({
+      step: Math.min(6, Math.max(1, parseInt(props.startStep || '1', 10) || 1)),
+      name: '', sex: 'male', age: 26, height: 178, weight: 72, target: 68,
+      goal: 'muscle', activity: 'moderate', level: 'intermediate', days: 4,
+      topics: allTopics.slice()
+    }, saved);
+    let pr = {};
+    try { pr = JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {}; } catch (e) { pr = {}; }
+    this.state.units = pr.units || 'metric';
+  }
+  theme() {
+    let p = {};
+    try { p = JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {}; } catch (e) { p = {}; }
+    const mode = this.props.theme || p.theme || 'dark';
+    const accent = this.props.accent || p.accent || '#C6F432';
+    const n = parseInt(accent.slice(1), 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    const dk = (v) => Math.round(v * 0.48).toString(16).padStart(2, '0');
+    const light = mode === 'light';
+    const T = light
+      ? { bg: '#F5F5F0', surface: '#FFFFFF', surface2: '#ECEDE6', line: '#DEDFD6', text: '#141512', muted: '#5E6158', nav: '#FFFFFF', strong: '#141512', onStrong: '#FFFFFF', flame: '#C2410C', flameSoft: '#FDE7DA', sky: '#1D5FA3', violet: '#7A3FA0' }
+      : { bg: '#0E0F0C', surface: '#1A1C17', surface2: '#24271F', line: '#2A2D25', text: '#F2F2EE', muted: '#A3A69C', nav: '#121310', strong: '#F2F2EE', onStrong: '#0E0F0C', flame: '#FF8A4C', flameSoft: '#2A1A10', sky: '#7CC8FF', violet: '#E9B8FF' };
+    const vars = Object.keys(T).map((k) => '--' + k + ':' + T[k]).join(';') + ';--accent:' + accent + ';--accentInk:' + (light ? '#' + dk(r) + dk(g) + dk(b) : accent) + ';--accentSoft:rgba(' + r + ',' + g + ',' + b + ',' + (light ? 0.18 : 0.14) + ');--onAccent:#0E0F0C;';
+    return { vars, mode, accent, light };
+  }
+  save() {
+    const s = this.state;
+    const profile = { name: s.name, sex: s.sex, age: s.age, height: s.height, weight: s.weight, target: s.target, goal: s.goal, activity: s.activity, level: s.level, days: s.days, topics: s.topics };
+    try {
+      window.localStorage.setItem('musclex.profile', JSON.stringify(profile));
+      const p = JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {};
+      p.topics = s.topics;
+      window.localStorage.setItem('musclex.prefs', JSON.stringify(p));
+    } catch (e) {}
+  }
+  renderVals() {
+    const s = this.state;
+    const set = (patch) => this.setState(patch);
+    const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+    const optStyle = (on) => 'border-radius:14px;cursor:pointer;font-family:inherit;' + (on ? 'border:2px solid var(--accentInk);background:var(--accentSoft);' : 'border:1px solid var(--line);background:var(--surface);');
+    const stepper = (label, key, unit, step, lo, hi, dec1) => ({
+      label, unit, display: dec1 ? s[key].toFixed(1) : String(Math.round(s[key])),
+      dec: () => set({ [key]: clamp(Math.round((this.state[key] - step) * 10) / 10, lo, hi) }),
+      inc: () => set({ [key]: clamp(Math.round((this.state[key] + step) * 10) / 10, lo, hi) }),
+      decLabel: 'Decrease ' + label.toLowerCase(), incLabel: 'Increase ' + label.toLowerCase()
+    });
+
+    const goalDefs = [
+      { id: 'lose', label: 'Lose weight', desc: 'Burn fat with a steady calorie deficit.', adj: -500, pk: 2.2, rate: 0.5 },
+      { id: 'gain', label: 'Gain weight', desc: 'Add healthy mass with a calorie surplus.', adj: 500, pk: 1.8, rate: 0.5 },
+      { id: 'muscle', label: 'Build muscle', desc: 'Lean bulk — grow muscle, limit fat gain.', adj: 300, pk: 2.0, rate: 0.25 },
+      { id: 'maintain', label: 'Maintain', desc: 'Hold your weight and keep performing.', adj: 0, pk: 1.6, rate: 0 },
+      { id: 'recomp', label: 'Body recomposition', desc: 'Lose fat and build muscle at the same time.', adj: -200, pk: 2.2, rate: 0 }
+    ];
+    const actDefs = [
+      { id: 'sedentary', label: 'Mostly sitting', desc: 'Desk job, little walking', f: 1.2 },
+      { id: 'light', label: 'Lightly active', desc: 'Some walking, on your feet at times', f: 1.375 },
+      { id: 'moderate', label: 'Moderately active', desc: 'On your feet most of the day', f: 1.55 },
+      { id: 'very', label: 'Very active', desc: 'Physical job or lots of movement', f: 1.725 },
+      { id: 'athlete', label: 'Athlete', desc: 'Twice-a-day training or heavy labour', f: 1.9 }
+    ];
+    const goal = goalDefs.find((g) => g.id === s.goal) || goalDefs[2];
+    const act = actDefs.find((a) => a.id === s.activity) || actDefs[2];
+
+    const bmr = 10 * s.weight + 6.25 * s.height - 5 * s.age + (s.sex === 'male' ? 5 : -161);
+    const tdee = bmr * act.f;
+    const floor = s.sex === 'male' ? 1500 : 1200;
+    const kcal = Math.max(floor, Math.round((tdee + goal.adj) / 10) * 10);
+    const protein = Math.round(goal.pk * s.weight);
+    const fat = Math.round((kcal * 0.25) / 9);
+    const carbs = Math.max(0, Math.round((kcal - protein * 4 - fat * 9) / 4));
+    const diff = Math.round((s.target - s.weight) * 10) / 10;
+    const imp = s.units === 'imperial';
+    const wt = (v) => imp ? Math.round(v * 2.20462 * 10) / 10 + ' lb' : Math.round(v * 10) / 10 + ' kg';
+    const impS = (label, key, step, lo, hi, show, unit) => ({ label, unit, display: show(s[key]),
+      dec: () => set({ [key]: clamp(Math.round((this.state[key] - step) * 100) / 100, lo, hi) }),
+      inc: () => set({ [key]: clamp(Math.round((this.state[key] + step) * 100) / 100, lo, hi) }),
+      decLabel: 'Decrease ' + label.toLowerCase(), incLabel: 'Increase ' + label.toLowerCase() });
+    const lb = (v) => String(Math.round(v * 2.20462));
+    let timeline;
+    if (goal.rate === 0) timeline = goal.id === 'maintain' ? 'Hold around ' + wt(s.weight) + ' while you build strength.' : 'Expect scale weight to stay similar while your body fat drops — track photos and measurements.';
+    else if ((goal.id === 'lose' && diff >= 0) || (goal.id !== 'lose' && diff <= 0)) timeline = 'Your target weight doesn’t match this goal yet — adjust it on the Body step for a timeline.';
+    else timeline = 'Reach ' + wt(s.target) + ' in about ' + Math.ceil(Math.abs(diff) / goal.rate) + ' weeks at ' + wt(goal.rate) + ' per week.';
+    const splits = { 2: 'Full body', 3: 'Full body', 4: 'Upper / Lower split', 5: 'Push / Pull / Legs + Upper / Lower', 6: 'Push / Pull / Legs ×2', 7: 'Push / Pull / Legs ×2 + active recovery' };
+    const levelLabel = { beginner: 'beginner', intermediate: 'intermediate', advanced: 'advanced' }[s.level];
+    const h = s.height / 100;
+    const bmi = (s.weight / (h * h)).toFixed(1);
+
+    const fmt = (n) => Math.round(n).toLocaleString('en-US');
+    const allOn = s.topics.length === this.allTopics.length;
+    return {
+      vars: this.theme().vars,
+      step: s.step,
+      s1: s.step === 1, s2: s.step === 2, s3: s.step === 3, s4: s.step === 4, s5: s.step === 5, s6: s.step === 6,
+      isFirst: s.step === 1, notFirst: s.step > 1, notLast: s.step < 6,
+      bars: [1, 2, 3, 4, 5, 6].map((i) => 'height:6px;border-radius:3px;background:' + (i <= s.step ? 'var(--accentInk)' : 'var(--line)')),
+      back: () => set({ step: Math.max(1, this.state.step - 1) }),
+      next: () => { const n = Math.min(6, this.state.step + 1); this.setState({ step: n }, () => { if (n === 6) this.save(); }); },
+      save: () => this.save(),
+      name: s.name,
+      onName: (e) => set({ name: e.target.value }),
+      sexes: [['male', 'Male'], ['female', 'Female']].map(([id, label]) => ({ label, on: s.sex === id, pick: () => set({ sex: id }),
+        style: optStyle(s.sex === id) + 'height:52px;font-size:15px;font-weight:600;color:var(--text);' })),
+      aboutSteppers: [stepper('Age', 'age', 'years', 1, 14, 90, false)],
+      bodySteppers: imp
+        ? [impS('Height', 'height', 2.54, 130, 220, (v) => { const t = Math.round(v / 2.54); return Math.floor(t / 12) + '′ ' + (t % 12) + '″'; }, ''),
+           impS('Current weight', 'weight', 0.45359, 35, 200, lb, 'lb'),
+           impS('Target weight', 'target', 0.45359, 35, 200, lb, 'lb')]
+        : [stepper('Height', 'height', 'cm', 1, 130, 220, false), stepper('Current weight', 'weight', 'kg', 0.5, 35, 200, true), stepper('Target weight', 'target', 'kg', 0.5, 35, 200, true)],
+      unitOpts: [['metric', 'Metric · kg, cm'], ['imperial', 'Imperial · lb, ft']].map(([id, label]) => ({ label, on: s.units === id,
+        pick: () => { set({ units: id }); try { const p = JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {}; p.units = id; window.localStorage.setItem('musclex.prefs', JSON.stringify(p)); } catch (e) {} },
+        style: 'height:44px;border:0;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;' + (s.units === id ? 'background:var(--strong);color:var(--onStrong);' : 'background:transparent;color:var(--muted);') })),
+      bmi,
+      toTarget: diff === 0 ? 'Target equals current weight' : (diff > 0 ? '+' : '−') + wt(Math.abs(diff)) + ' to your target',
+      goals: goalDefs.map((g) => ({ ...g, on: g.id === s.goal, pick: () => set({ goal: g.id }),
+        style: optStyle(g.id === s.goal) + 'display:flex;align-items:center;gap:14px;padding:16px;min-height:72px;width:100%;box-sizing:border-box;',
+        dot: 'width:22px;height:22px;border-radius:11px;flex-shrink:0;box-sizing:border-box;' + (g.id === s.goal ? 'border:7px solid var(--accentInk);' : 'border:2px solid var(--muted);') })),
+      activities: actDefs.map((a) => ({ ...a, on: a.id === s.activity, pick: () => set({ activity: a.id }),
+        style: optStyle(a.id === s.activity) + 'display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:12px 16px;min-height:56px;width:100%;box-sizing:border-box;text-align:left;' })),
+      levels: [['beginner', 'Beginner'], ['intermediate', 'Intermediate'], ['advanced', 'Advanced']].map(([id, label]) => ({ label, on: s.level === id, pick: () => set({ level: id }),
+        style: optStyle(s.level === id) + 'height:48px;font-size:13px;font-weight:600;color:var(--text);' })),
+      days: [2, 3, 4, 5, 6, 7].map((d) => ({ label: String(d), on: s.days === d, pick: () => set({ days: d }),
+        style: optStyle(s.days === d) + 'height:48px;font-size:16px;font-weight:700;color:var(--text);' })),
+      topics: this.allTopics.map((t) => {
+        const on = s.topics.indexOf(t) >= 0;
+        return { label: t, on,
+          toggle: () => { const cur = this.state.topics; set({ topics: on ? cur.filter((x) => x !== t) : cur.concat([t]) }); },
+          style: optStyle(on) + 'display:flex;align-items:center;justify-content:space-between;gap:8px;height:56px;padding:0 14px;',
+          check: 'width:24px;height:24px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-sizing:border-box;' + (on ? 'background:var(--accentInk);color:var(--bg);' : 'border:2px solid var(--muted);') };
+      }),
+      topicCount: s.topics.length,
+      allLabel: allOn ? 'Clear all' : 'Select all',
+      toggleAll: () => set({ topics: allOn ? [] : this.allTopics.slice() }),
+      planTitle: s.name ? s.name + ', your plan is ready' : 'Your plan is ready',
+      goalLabel: goal.label,
+      kcal: fmt(kcal), tdee: fmt(tdee), bmr: fmt(bmr), protein, carbs, fat,
+      timeline,
+      split: s.days + ' workouts a week · ' + splits[s.days] + ' · ' + levelLabel + ' program',
+      water: (Math.round(s.weight * 0.035 * 2) / 2).toFixed(1)
+    };
+  }
+}
+</script>
+</body>
+</html>

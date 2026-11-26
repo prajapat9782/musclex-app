@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tab bar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<nav aria-label="Main" style="width: 100%; height: 84px; box-sizing: border-box; border-top: 1px solid var(--line, #2A2D25); background: var(--nav, #121310); display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding-bottom: 16px; font-family: Inter, system-ui, sans-serif; color: var(--muted, #A3A69C)">
+  <a href="Home.dc.html" aria-current="{{cur.home}}" style="{{s.home}}">
+    <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
+  <a href="Progress.dc.html" aria-current="{{cur.progress}}" style="{{s.progress}}">
+    <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg>Progress</a>
+  <a href="Community.dc.html" aria-current="{{cur.community}}" style="{{s.community}}">
+    <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6"/><path d="M16 4a4 4 0 0 1 0 8"/><path d="M22 21c0-3-1.5-5-4-5.7"/></svg>Community</a>
+  <a href="Meals.dc.html" aria-current="{{cur.meals}}" style="{{s.meals}}">
+    <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3v8a3 3 0 0 0 6 0V3M7 3v18M17 3c-2 0-3 3-3 6s1 4 3 4v8"/></svg>Meals</a>
+  <a href="News.dc.html" aria-current="{{cur.news}}" style="{{s.news}}">
+    <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>News</a>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["home","progress","community","meals","news"],"default":"home"},"$preview":{"width":390,"height":84}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const active = this.props.active ?? 'home';
+    const s = {}, cur = {};
+    ['home', 'progress', 'community', 'meals', 'news'].forEach((k) => {
+      const on = k === active;
+      cur[k] = on ? 'page' : 'false';
+      s[k] = 'display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-decoration:none;font-size:11px;' + (on ? 'color:var(--accentInk,#C6F432);font-weight:700' : 'color:var(--muted,#A3A69C);font-weight:500');
+    });
+    return { s, cur };
+  }
+}
+</script>
+</body>
+</html>

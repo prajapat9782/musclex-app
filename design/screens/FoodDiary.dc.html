@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MuscleX · Food diary</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+button:disabled{cursor:default}
+</style>
+</helmet>
+<div style="{{vars}} width: 390px; height: 844px; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; overflow: hidden">
+  <div style="padding: 52px 20px 12px; display: flex; flex-direction: column; gap: 14px; flex-shrink: 0">
+    <div style="display: flex; align-items: center; gap: 12px">
+      <a href="Meals.dc.html" aria-label="Back to meal plan" style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); color: var(--text); display: flex; align-items: center; justify-content: center">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+      </a>
+      <h1 style="margin: 0; flex: 1; font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700">Food diary</h1>
+      <button onClick="{{goToday}}" style="height: 44px; padding: 0 14px; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font-size: 14px; font-weight: 600">Today</button>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: space-between">
+      <button onClick="{{prevWeek}}" aria-label="Previous week" style="width: 44px; height: 44px; border-radius: 12px; border: 0; background: transparent; color: var(--text); display: flex; align-items: center; justify-content: center">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+      <span style="font-size: 14px; font-weight: 700">{{weekLabel}}</span>
+      <button onClick="{{nextWeek}}" disabled="{{noNext}}" aria-label="Next week" style="{{nextStyle}}">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+    <div role="group" aria-label="Choose a day" style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px">
+      <sc-for list="{{days}}" as="d" hint-placeholder-count="7">
+        <button onClick="{{d.pick}}" disabled="{{d.future}}" aria-pressed="{{d.on}}" aria-label="{{d.aria}}" style="{{d.style}}">
+          <span style="font-size: 11px; font-weight: 600; opacity: 0.8">{{d.wd}}</span>
+          <span style="font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 700">{{d.num}}</span>
+          <span style="{{d.dot}}"></span>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="flex: 1; overflow-y: auto; padding: 6px 20px 32px; display: flex; flex-direction: column; gap: 16px">
+    <div style="background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <span style="font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px">{{dayLabel}}</span>
+          <span style="font-family: 'Space Grotesk', sans-serif; font-size: 34px; font-weight: 700; letter-spacing: -1px">{{eaten}} <span style="font-size: 15px; color: var(--muted); font-weight: 500; letter-spacing: 0">/ {{target}} kcal</span></span>
+        </div>
+        <span style="{{statusStyle}}">{{status}}</span>
+      </div>
+      <div style="height: 10px; border-radius: 5px; background: var(--surface2); overflow: hidden"><div style="{{bar}}"></div></div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+        <sc-for list="{{macros}}" as="m" hint-placeholder-count="3">
+          <div style="display: flex; flex-direction: column; gap: 4px">
+            <span style="font-size: 12px; color: var(--muted)">{{m.label}}</span>
+            <span style="font-size: 16px; font-weight: 700">{{m.have}}<span style="font-size: 12px; color: var(--muted); font-weight: 500"> / {{m.goal}} g</span></span>
+            <div style="height: 5px; border-radius: 3px; background: var(--surface2); overflow: hidden"><div style="{{m.bar}}"></div></div>
+          </div>
+        </sc-for>
+      </div>
+      <span style="font-size: 12px; color: var(--muted); padding-top: 10px; border-top: 1px solid var(--line)">{{weekAvg}}</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+      <a href="Water.dc.html" style="min-height: 64px; padding: 10px 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 10px">
+        <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--sky); flex-shrink: 0"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg>
+        <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 12px; color: var(--muted)">Water</span><span style="font-size: 15px; font-weight: 700">{{waterLabel}}</span></span>
+      </a>
+      <button onClick="{{copyPrev}}" style="{{copyStyle}}">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>
+        <span style="display: flex; flex-direction: column; gap: 2px; text-align: left"><span style="font-size: 12px; color: var(--muted)">{{copySub}}</span><span style="font-size: 15px; font-weight: 700">{{copyLabel}}</span></span>
+      </button>
+    </div>
+
+    <sc-for list="{{sections}}" as="sec" hint-placeholder-count="4">
+      <section style="background: var(--surface); border: 1px solid var(--line); border-radius: 20px; overflow: hidden">
+        <a href="MealDetail.dc.html" onClick="{{sec.open}}" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 0 16px; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--line)">
+          <span style="font-size: 16px; font-weight: 700">{{sec.label}}</span>
+          <span style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700">{{sec.kcal}}
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--muted)"><path d="M9 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+        <sc-for list="{{sec.items}}" as="it" hint-placeholder-count="2">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 16px">
+            <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+              <span style="font-size: 14px; font-weight: 600">{{it.name}}</span>
+              <span style="font-size: 12px; color: var(--muted)">{{it.detail}}</span>
+            </div>
+            <span style="font-size: 14px; color: var(--muted); white-space: nowrap">{{it.kcal}}</span>
+          </div>
+        </sc-for>
+        <sc-if value="{{sec.empty}}" hint-placeholder-val="{{ false }}">
+          <p style="margin: 0; padding: 12px 16px 4px; font-size: 13px; color: var(--muted)">Nothing logged</p>
+        </sc-if>
+        <a href="FoodLog.dc.html" onClick="{{sec.add}}" style="display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 16px; color: var(--accentInk); text-decoration: none; font-size: 14px; font-weight: 700">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add food</a>
+      </section>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"accent":{"editor":"color","default":"#C6F432","options":["#C6F432","#FF8A4C","#7CC8FF","#E9B8FF"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.TODAY = '2026-11-25';
+    let v = {};
+    try { v = JSON.parse(window.localStorage.getItem('musclex.view') || '{}') || {}; } catch (e) { v = {}; }
+    const sel = v.date && v.date <= this.TODAY ? v.date : this.TODAY;
+    this.state = { sel, anchor: this.monday(sel), diary: this.loadDiary() };
+  }
+  theme() {
+    let p = {};
+    try { p = JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {}; } catch (e) { p = {}; }
+    const mode = this.props.theme || p.theme || 'dark';
+    const accent = this.props.accent || p.accent || '#C6F432';
+    const n = parseInt(accent.slice(1), 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    const dk = (v) => Math.round(v * 0.48).toString(16).padStart(2, '0');
+    const light = mode === 'light';
+    const T = light
+      ? { bg: '#F5F5F0', surface: '#FFFFFF', surface2: '#ECEDE6', line: '#DEDFD6', text: '#141512', muted: '#5E6158', nav: '#FFFFFF', strong: '#141512', onStrong: '#FFFFFF', flame: '#C2410C', flameSoft: '#FDE7DA', sky: '#1D5FA3', violet: '#7A3FA0' }
+      : { bg: '#0E0F0C', surface: '#1A1C17', surface2: '#24271F', line: '#2A2D25', text: '#F2F2EE', muted: '#A3A69C', nav: '#121310', strong: '#F2F2EE', onStrong: '#0E0F0C', flame: '#FF8A4C', flameSoft: '#2A1A10', sky: '#7CC8FF', violet: '#E9B8FF' };
+    const vars = Object.keys(T).map((k) => '--' + k + ':' + T[k]).join(';') + ';--accent:' + accent + ';--accentInk:' + (light ? '#' + dk(r) + dk(g) + dk(b) : accent) + ';--accentSoft:rgba(' + r + ',' + g + ',' + b + ',' + (light ? 0.18 : 0.14) + ');--onAccent:#0E0F0C;';
+    return { vars, mode, accent, light };
+  }
+  lib() {
+    const FOODS = {
+      oats: ['Rolled oats', '50 g', 190, 7, 32, 3.5], whey: ['Whey protein', '1 scoop · 30 g', 120, 24, 3, 1.5], banana: ['Banana', '1 medium', 105, 1.3, 27, 0.4],
+      pb: ['Peanut butter', '1 tbsp · 16 g', 95, 3.5, 3, 8], chicken: ['Chicken breast', '150 g cooked', 248, 46, 0, 5.4], rice: ['White rice', '1 cup cooked', 205, 4.3, 45, 0.4],
+      avocado: ['Avocado', '½ fruit', 120, 1.5, 6, 11], greens: ['Mixed salad greens', '1 bowl', 20, 1.5, 3.5, 0.3], yogurt: ['Greek yogurt 2%', '170 g', 150, 17, 8, 4],
+      berries: ['Mixed berries', '1 cup', 70, 1, 17, 0.5], honey: ['Honey', '1 tsp', 21, 0, 6, 0], salmon: ['Salmon fillet', '150 g', 312, 34, 0, 19],
+      sweetpotato: ['Sweet potato', '1 medium', 112, 2, 26, 0.1], broccoli: ['Broccoli', '1 cup', 31, 2.5, 6, 0.3], eggs: ['Whole eggs', '2 large', 143, 12.6, 0.7, 9.5],
+      toast: ['Wholegrain toast', '1 slice', 80, 4, 14, 1], paneer: ['Paneer', '100 g', 265, 18, 1.2, 21], dal: ['Dal (lentil curry)', '1 cup', 230, 13, 32, 6],
+      roti: ['Roti / chapati', '1 piece', 120, 3, 18, 3.7], milk: ['Milk 2%', '250 ml', 122, 8, 12, 4.8], almonds: ['Almonds', '28 g', 164, 6, 6, 14],
+      apple: ['Apple', '1 medium', 95, 0.5, 25, 0.3], pasta: ['Pasta', '1 cup cooked', 220, 8, 43, 1.3], beef: ['Lean beef mince', '150 g cooked', 330, 39, 0, 19],
+      tofu: ['Firm tofu', '150 g', 215, 23, 5, 12], oil: ['Olive oil', '1 tbsp', 119, 0, 0, 13.5]
+    };
+    const SEED = {
+      '2026-11-19': [['breakfast', 'eggs', 1], ['breakfast', 'toast', 2], ['lunch', 'chicken', 1], ['lunch', 'rice', 1.5], ['snack', 'whey', 1], ['snack', 'banana', 1], ['dinner', 'dal', 1], ['dinner', 'roti', 2], ['dinner', 'paneer', 1]],
+      '2026-11-20': [['breakfast', 'oats', 1.5], ['breakfast', 'whey', 1], ['breakfast', 'pb', 1], ['lunch', 'beef', 1], ['lunch', 'pasta', 1.5], ['snack', 'almonds', 1], ['dinner', 'salmon', 1], ['dinner', 'sweetpotato', 2], ['dinner', 'broccoli', 1]],
+      '2026-11-21': [['breakfast', 'yogurt', 1], ['breakfast', 'berries', 1], ['lunch', 'chicken', 1], ['lunch', 'rice', 1], ['lunch', 'avocado', 1], ['dinner', 'tofu', 1], ['dinner', 'rice', 1], ['dinner', 'broccoli', 1]],
+      '2026-11-22': [['breakfast', 'eggs', 1.5], ['breakfast', 'toast', 2], ['breakfast', 'milk', 1], ['lunch', 'dal', 1.5], ['lunch', 'roti', 3], ['snack', 'apple', 1], ['snack', 'almonds', 1], ['dinner', 'chicken', 1.5], ['dinner', 'pasta', 1.5], ['dinner', 'oil', 1]],
+      '2026-11-23': [['breakfast', 'oats', 1.5], ['breakfast', 'whey', 1], ['breakfast', 'banana', 1], ['lunch', 'paneer', 1], ['lunch', 'roti', 2], ['lunch', 'greens', 1], ['snack', 'yogurt', 1], ['dinner', 'beef', 1], ['dinner', 'rice', 1.5], ['dinner', 'broccoli', 1]],
+      '2026-11-24': [['breakfast', 'oats', 1], ['breakfast', 'whey', 1], ['breakfast', 'pb', 2], ['lunch', 'chicken', 1], ['lunch', 'rice', 1.5], ['lunch', 'avocado', 1], ['snack', 'whey', 1], ['snack', 'milk', 1], ['dinner', 'salmon', 1], ['dinner', 'sweetpotato', 1.5], ['dinner', 'broccoli', 1]],
+      '2026-11-25': [['breakfast', 'oats', 1.5], ['breakfast', 'whey', 1], ['breakfast', 'banana', 1], ['breakfast', 'pb', 1.5], ['lunch', 'chicken', 1.25], ['lunch', 'rice', 1.5], ['lunch', 'avocado', 1], ['lunch', 'greens', 1]]
+    };
+    return { FOODS, SEED, SLOTS: [['breakfast', 'Breakfast'], ['lunch', 'Lunch'], ['snack', 'Snacks'], ['dinner', 'Dinner']] };
+  }
+  loadDiary() {
+    let d = null;
+    try { d = JSON.parse(window.localStorage.getItem('musclex.diary') || 'null'); } catch (e) { d = null; }
+    if (!d || typeof d !== 'object') {
+      const S = this.lib().SEED;
+      d = {};
+      Object.keys(S).forEach((k) => { d[k] = S[k].map((e, i) => ({ u: k + '-' + i, s: e[0], f: e[1], q: e[2] })); });
+      try { window.localStorage.setItem('musclex.diary', JSON.stringify(d)); } catch (e) {}
+    }
+    return d;
+  }
+  nut(e) {
+    const b = e.f ? this.lib().FOODS[e.f] : [e.n, e.sv || 'Custom', e.k, e.p, e.c, e.x];
+    if (!b) return { name: 'Unknown', serving: '', kcal: 0, p: 0, c: 0, f: 0 };
+    return { name: b[0], serving: b[1], kcal: (b[2] || 0) * e.q, p: (b[3] || 0) * e.q, c: (b[4] || 0) * e.q, f: (b[5] || 0) * e.q };
+  }
+  sum(list) {
+    return list.reduce((a, e) => { const n = this.nut(e); a.kcal += n.kcal; a.p += n.p; a.c += n.c; a.f += n.f; return a; }, { kcal: 0, p: 0, c: 0, f: 0 });
+  }
+  target() {
+    let s = {};
+    try { s = JSON.parse(window.localStorage.getItem('musclex.profile') || '{}') || {}; } catch (e) { s = {}; }
+    const p = Object.assign({ sex: 'male', age: 26, height: 178, weight: 72, goal: 'muscle', activity: 'moderate' }, s);
+    const goals = { lose: [-500, 2.2], gain: [500, 1.8], muscle: [300, 2.0], maintain: [0, 1.6], recomp: [-200, 2.2] };
+    const acts = { sedentary: 1.2, light: 1.375, moderate: 1.55, very: 1.725, athlete: 1.9 };
+    const g = goals[p.goal] || goals.muscle;
+    const bmr = 10 * p.weight + 6.25 * p.height - 5 * p.age + (p.sex === 'male' ? 5 : -161);
+    const kcal = Math.max(p.sex === 'male' ? 1500 : 1200, Math.round((bmr * (acts[p.activity] || 1.55) + g[0]) / 10) * 10);
+    const protein = Math.round(g[1] * p.weight);
+    const fat = Math.round(kcal * 0.25 / 9);
+    return { kcal, protein, fat, carbs: Math.max(0, Math.round((kcal - protein * 4 - fat * 9) / 4)) };
+  }
+  toD(k) { return new Date(k + 'T12:00:00'); }
+  key(dt) { return dt.getFullYear() + '-' + String(dt.getMonth() + 1).padStart(2, '0') + '-' + String(dt.getDate()).padStart(2, '0'); }
+  add(k, n) { const d = this.toD(k); d.setDate(d.getDate() + n); return this.key(d); }
+  monday(k) { return this.add(k, -((this.toD(k).getDay() + 6) % 7)); }
+  extras(tg) {
+    const st = this.state;
+    let w = null, prof = {}, pr = {};
+    try { w = JSON.parse(window.localStorage.getItem('musclex.water') || 'null'); } catch (e) { w = null; }
+    if (!w || typeof w !== 'object') w = { '2026-11-19': 2500, '2026-11-20': 2250, '2026-11-21': 1750, '2026-11-22': 2750, '2026-11-23': 2500, '2026-11-24': 2000, '2026-11-25': 1500 };
+    try { prof = JSON.parse(window.localStorage.getItem('musclex.profile') || '{}') || {}; } catch (e) { prof = {}; }
+    try { pr = JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {}; } catch (e) { pr = {}; }
+    const goal = Math.max(1500, Math.round(((prof.weight || 72) * 35) / 250) * 250);
+    const vol = (ml) => pr.units === 'imperial' ? Math.round(ml * 0.033814) + ' oz' : (ml / 1000).toFixed(1) + ' L';
+    const prev = this.add(st.sel, -1);
+    const prevList = st.diary[prev] || [];
+    const copied = st.copiedFor === st.sel;
+    const can = prevList.length > 0 && !copied;
+    return {
+      waterLabel: vol(w[st.sel] || 0) + ' / ' + vol(goal),
+      copySub: prevList.length ? this.sum(prevList).kcal.toFixed(0) + ' kcal on ' + this.toD(prev).toLocaleDateString('en-GB', { weekday: 'short' }) : 'Nothing logged',
+      copyLabel: copied ? 'Copied' : 'Copy previous day',
+      copyStyle: 'min-height:64px;padding:10px 14px;border-radius:16px;display:flex;align-items:center;gap:10px;' + (can ? 'border:1px solid var(--line);background:var(--surface);color:var(--text);' : 'border:1px solid var(--line);background:var(--surface2);color:var(--muted);'),
+      copyPrev: () => {
+        if (!can) return;
+        const d = Object.assign({}, this.state.diary);
+        d[st.sel] = (d[st.sel] || []).concat(prevList.map((e, i) => Object.assign({}, e, { u: 'c' + Date.now() + i })));
+        try { window.localStorage.setItem('musclex.diary', JSON.stringify(d)); } catch (e) {}
+        this.setState({ diary: d, copiedFor: st.sel });
+      }
+    };
+  }
+  setView(slot) {
+    try { window.localStorage.setItem('musclex.view', JSON.stringify({ date: this.state.sel, slot, from: 'FoodDiary.dc.html', parent: 'FoodDiary.dc.html' })); } catch (e) {}
+  }
+  renderVals() {
+    const st = this.state, T = this.TODAY, tg = this.target();
+    const fmt = (n) => Math.round(n).toLocaleString('en-US');
+    const lbl = (k, o) => this.toD(k).toLocaleDateString('en-GB', o);
+    const days = [0, 1, 2, 3, 4, 5, 6].map((i) => {
+      const k = this.add(st.anchor, i);
+      const future = k > T, on = k === st.sel;
+      const list = st.diary[k] || [];
+      const pct = this.sum(list).kcal / tg.kcal;
+      const dotColor = list.length === 0 ? 'transparent' : (pct >= 0.9 && pct <= 1.1 ? 'var(--accentInk)' : 'var(--flame)');
+      return {
+        wd: lbl(k, { weekday: 'narrow' }), num: this.toD(k).getDate(), on, future,
+        aria: lbl(k, { weekday: 'long', day: 'numeric', month: 'long' }),
+        pick: () => this.setState({ sel: k }),
+        style: 'height:72px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;' + (on ? 'border:0;background:var(--strong);color:var(--onStrong);' : 'border:1px solid var(--line);background:var(--surface);color:var(--text);') + (future ? 'opacity:0.35;' : ''),
+        dot: 'width:6px;height:6px;border-radius:3px;background:' + dotColor
+      };
+    });
+    const end = this.add(st.anchor, 6);
+    const noNext = this.add(st.anchor, 7) > T;
+    const logged = days.map((d, i) => this.add(st.anchor, i)).filter((k) => k <= T && (st.diary[k] || []).length);
+    const avg = logged.length ? logged.reduce((a, k) => a + this.sum(st.diary[k]).kcal, 0) / logged.length : 0;
+    const list = st.diary[st.sel] || [];
+    const tot = this.sum(list);
+    const diff = Math.round(tot.kcal - tg.kcal);
+    const within = Math.abs(diff) <= tg.kcal * 0.1;
+    const status = list.length === 0 ? 'Not logged' : within ? 'On target' : diff < 0 ? fmt(-diff) + ' under' : fmt(diff) + ' over';
+    const mac = (label, have, goal) => ({ label, have: Math.round(have), goal, bar: 'height:100%;border-radius:3px;background:var(--accentInk);width:' + Math.min(100, Math.round(have / goal * 100)) + '%' });
+    const sections = this.lib().SLOTS.map(([id, label]) => {
+      const items = list.filter((e) => e.s === id).map((e) => {
+        const n = this.nut(e);
+        return { name: n.name, detail: (e.q !== 1 ? e.q + ' × ' : '') + n.serving, kcal: fmt(n.kcal) + ' kcal' };
+      });
+      const k = this.sum(list.filter((e) => e.s === id)).kcal;
+      return { label, items, empty: items.length === 0, kcal: fmt(k) + ' kcal', open: () => this.setView(id), add: () => this.setView(id) };
+    });
+    return {
+      vars: this.theme().vars,
+      days, noNext,
+      nextStyle: 'width:44px;height:44px;border-radius:12px;border:0;background:transparent;color:var(--text);display:flex;align-items:center;justify-content:center;' + (noNext ? 'opacity:0.3;' : ''),
+      weekLabel: lbl(st.anchor, { day: 'numeric', month: 'short' }) + ' – ' + lbl(end, { day: 'numeric', month: 'short', year: 'numeric' }),
+      prevWeek: () => this.setState({ anchor: this.add(this.state.anchor, -7), sel: this.add(this.state.anchor, -1) }),
+      nextWeek: () => { if (!noNext) { const a = this.add(this.state.anchor, 7); this.setState({ anchor: a, sel: a > T ? T : a }); } },
+      goToday: () => this.setState({ sel: T, anchor: this.monday(T) }),
+      dayLabel: st.sel === T ? 'Today' : st.sel === this.add(T, -1) ? 'Yesterday' : lbl(st.sel, { weekday: 'long', day: 'numeric', month: 'short' }),
+      eaten: fmt(tot.kcal), target: fmt(tg.kcal), status,
+      statusStyle: 'font-size:13px;font-weight:700;padding:6px 10px;border-radius:10px;white-space:nowrap;' + (list.length === 0 ? 'background:var(--surface2);color:var(--muted);' : within ? 'background:var(--accentSoft);color:var(--accentInk);' : 'background:var(--flameSoft);color:var(--flame);'),
+      bar: 'height:100%;border-radius:5px;background:' + (within ? 'var(--accentInk)' : 'var(--flame)') + ';width:' + Math.min(100, Math.round(tot.kcal / tg.kcal * 100)) + '%',
+      macros: [mac('Protein', tot.p, tg.protein), mac('Carbs', tot.c, tg.carbs), mac('Fat', tot.f, tg.fat)],
+      weekAvg: logged.length ? 'Week average ' + fmt(avg) + ' kcal · ' + logged.length + ' of 7 days logged' : 'No days logged this week',
+      sections,
+      ...this.extras(tg)
+    };
+  }
+}
+</script>
+</body>
+</html>

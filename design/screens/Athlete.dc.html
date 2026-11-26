@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MuscleX · Athlete profile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="{{vars}} width: 390px; height: 844px; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; overflow: hidden">
+  <div style="flex: 1; overflow-y: auto; padding: 52px 20px 28px; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <a href="Community.dc.html" aria-label="Back to community" style="width: 44px; height: 44px; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); color: var(--text); display: flex; align-items: center; justify-content: center">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+      </a>
+      <button aria-label="More options" style="width: 44px; height: 44px; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); color: var(--text); display: flex; align-items: center; justify-content: center">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+      </button>
+    </div>
+
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+      <div style="width: 88px; height: 88px; border-radius: 44px; background: #C6F432; color: #0E0F0C; display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 32px">PS</div>
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700">Priya Sharma</h1>
+        <span style="font-size: 14px; color: var(--muted)">Build muscle · Intermediate · 5 days/week</span>
+      </div>
+      <div style="display: flex; gap: 20px; font-size: 13px; color: var(--muted)">
+        <span><strong style="color: var(--text); font-size: 15px">{{followers}}</strong> followers</span>
+        <span><strong style="color: var(--text); font-size: 15px">318</strong> following</span>
+        <span><strong style="color: var(--text); font-size: 15px">212</strong> workouts</span>
+      </div>
+      <div style="display: flex; gap: 8px; width: 100%">
+        <button onClick="{{toggleFollow}}" aria-pressed="{{following}}" style="{{followStyle}}">{{followLabel}}</button>
+        <button style="flex: 1; height: 48px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font-size: 15px; font-weight: 600">Message</button>
+      </div>
+    </div>
+
+    <div style="padding: 16px; border-radius: 20px; background: var(--flameSoft); display: flex; align-items: center; gap: 14px">
+      <svg aria-hidden="true" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--flame)"><path d="M12 22c4 0 7-3 7-7 0-4-3-6-4-10-2 2-3 4-3 6-1-1-2-2-2-4-2 2-5 5-5 8 0 4 3 7 7 7z"/></svg>
+      <div style="display: flex; flex-direction: column; gap: 2px; flex: 1">
+        <span style="font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; color: var(--flame)">128-day streak</span>
+        <span style="font-size: 13px">Longest ever · #1 this month</span>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700">Last 12 weeks</h2>
+      <div style="padding: 14px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 4px">
+        <sc-for list="{{heat}}" as="h" hint-placeholder-count="84">
+          <div style="{{h}}"></div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+      <div style="padding: 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 11px; color: var(--muted)">Deadlift</span>
+        <span style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">120 kg</span>
+      </div>
+      <div style="padding: 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 11px; color: var(--muted)">Squat</span>
+        <span style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">95 kg</span>
+      </div>
+      <div style="padding: 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 11px; color: var(--muted)">Bodyweight</span>
+        <span style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">+3.2 kg</span>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700">Milestones</h2>
+      <sc-for list="{{milestones}}" as="m" hint-placeholder-count="3">
+        <div style="display: flex; gap: 14px; align-items: center; padding: 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line)">
+          <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--accentSoft); color: var(--accentInk); display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 15px; font-weight: 600">{{m.t}}</span>
+            <span style="font-size: 12px; color: var(--muted)">{{m.d}}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"accent":{"editor":"color","default":"#C6F432","options":["#C6F432","#FF8A4C","#7CC8FF","#E9B8FF"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { following: false };
+  }
+  theme() {
+    let p = {};
+    try { p = JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {}; } catch (e) { p = {}; }
+    const mode = this.props.theme || p.theme || 'dark';
+    const accent = this.props.accent || p.accent || '#C6F432';
+    const n = parseInt(accent.slice(1), 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    const dk = (v) => Math.round(v * 0.48).toString(16).padStart(2, '0');
+    const light = mode === 'light';
+    const T = light
+      ? { bg: '#F5F5F0', surface: '#FFFFFF', surface2: '#ECEDE6', line: '#DEDFD6', text: '#141512', muted: '#5E6158', nav: '#FFFFFF', strong: '#141512', onStrong: '#FFFFFF', flame: '#C2410C', flameSoft: '#FDE7DA', sky: '#1D5FA3', violet: '#7A3FA0' }
+      : { bg: '#0E0F0C', surface: '#1A1C17', surface2: '#24271F', line: '#2A2D25', text: '#F2F2EE', muted: '#A3A69C', nav: '#121310', strong: '#F2F2EE', onStrong: '#0E0F0C', flame: '#FF8A4C', flameSoft: '#2A1A10', sky: '#7CC8FF', violet: '#E9B8FF' };
+    const vars = Object.keys(T).map((k) => '--' + k + ':' + T[k]).join(';') + ';--accent:' + accent + ';--accentInk:' + (light ? '#' + dk(r) + dk(g) + dk(b) : accent) + ';--accentSoft:rgba(' + r + ',' + g + ',' + b + ',' + (light ? 0.18 : 0.14) + ');--onAccent:#0E0F0C;';
+    return { vars, mode, accent, light };
+  }
+  renderVals() {
+    const f = this.state.following;
+    const heat = Array.from({ length: 84 }, (_, i) => {
+      const lvl = [3, 2, 3, 1, 3, 2, 0][i % 7] - (i % 11 === 0 ? 1 : 0);
+      const op = [0, 0.35, 0.65, 1][Math.max(0, lvl)];
+      return 'aspect-ratio:1;border-radius:4px;' + (op === 0 ? 'background:var(--surface2);' : 'background:var(--accentInk);opacity:' + op + ';');
+    });
+    return {
+      vars: this.theme().vars,
+      following: f,
+      followers: f ? '2,419' : '2,418',
+      followLabel: f ? 'Following' : 'Follow',
+      followStyle: 'flex:1;height:48px;border-radius:14px;font-size:15px;font-weight:700;' + (f ? 'border:1px solid var(--line);background:var(--surface);color:var(--text);' : 'border:0;background:var(--accent);color:var(--onAccent);'),
+      toggleFollow: () => this.setState({ following: !this.state.following }),
+      heat,
+      milestones: [
+        { t: '100-day streak', d: 'Reached Aug 19' },
+        { t: 'First 100 kg deadlift', d: 'Jul 2 · 16 weeks in' },
+        { t: '200 workouts logged', d: 'Nov 10' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

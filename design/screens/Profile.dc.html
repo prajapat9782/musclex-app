@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MuscleX · Profile &amp; settings</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="{{vars}} width: 390px; height: 844px; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; overflow: hidden">
+  <div style="padding: 52px 20px 12px; display: flex; align-items: center; gap: 12px; flex-shrink: 0">
+    <a href="Home.dc.html" aria-label="Back to home" style="width: 44px; height: 44px; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); color: var(--text); display: flex; align-items: center; justify-content: center">
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+    </a>
+    <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700">Profile</h1>
+  </div>
+
+  <div style="flex: 1; overflow-y: auto; padding: 8px 20px 36px; display: flex; flex-direction: column; gap: 22px">
+    <div style="padding: 18px; border-radius: 22px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 16px">
+      <div style="display: flex; align-items: center; gap: 14px">
+        <div style="width: 64px; height: 64px; border-radius: 32px; background: var(--accent); color: var(--onAccent); display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 24px">{{initial}}</div>
+        <div style="display: flex; flex-direction: column; gap: 2px; flex: 1">
+          <span style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">{{name}}</span>
+          <span style="font-size: 13px; color: var(--muted)">{{summary}}</span>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; text-align: center">
+        <div style="padding: 10px 4px; border-radius: 14px; background: var(--surface2); display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; color: var(--flame)">23</span><span style="font-size: 11px; color: var(--muted)">Day streak</span></div>
+        <div style="padding: 10px 4px; border-radius: 14px; background: var(--surface2); display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">34</span><span style="font-size: 11px; color: var(--muted)">Workouts</span></div>
+        <div style="padding: 10px 4px; border-radius: 14px; background: var(--surface2); display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">6</span><span style="font-size: 11px; color: var(--muted)">PRs</span></div>
+      </div>
+      <a href="Onboarding.dc.html" style="height: 48px; border-radius: 14px; border: 1px solid var(--line); color: var(--text); font-size: 15px; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center">Edit profile &amp; goals</a>
+    </div>
+
+    <section style="display: flex; flex-direction: column; gap: 10px">
+      <h2 style="margin: 0; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px">Appearance</h2>
+      <div style="padding: 16px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 15px; font-weight: 600">Theme</span>
+          <div role="group" aria-label="Theme" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; padding: 4px; background: var(--surface2); border-radius: 14px">
+            <sc-for list="{{modes}}" as="m" hint-placeholder-count="2">
+              <button onClick="{{m.pick}}" aria-pressed="{{m.on}}" style="{{m.style}}">{{m.label}}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 15px; font-weight: 600">Accent colour</span>
+          <div role="group" aria-label="Accent colour" style="display: flex; gap: 10px; flex-wrap: wrap">
+            <sc-for list="{{swatches}}" as="s" hint-placeholder-count="6">
+              <button onClick="{{s.pick}}" aria-pressed="{{s.on}}" aria-label="{{s.name}}" style="{{s.style}}"></button>
+            </sc-for>
+          </div>
+          <span style="font-size: 12px; color: var(--muted)">Default: Volt lime. Applies across the app.</span>
+        </div>
+      </div>
+    </section>
+
+    <section style="display: flex; flex-direction: column; gap: 10px">
+      <h2 style="margin: 0; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px">Privacy &amp; notifications</h2>
+      <div style="border-radius: 18px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column">
+        <sc-for list="{{switches}}" as="w" hint-placeholder-count="4">
+          <div style="{{w.row}}">
+            <div style="display: flex; flex-direction: column; gap: 2px; flex: 1">
+              <span style="font-size: 15px; font-weight: 600">{{w.label}}</span>
+              <span style="font-size: 12px; color: var(--muted)">{{w.desc}}</span>
+            </div>
+            <button onClick="{{w.toggle}}" role="switch" aria-checked="{{w.on}}" aria-label="{{w.label}}" style="{{w.track}}"><span style="width: 26px; height: 26px; border-radius: 13px; background: #FFFFFF; display: block"></span></button>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline">
+        <h2 style="margin: 0; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px">News topics</h2>
+        <span style="font-size: 12px; color: var(--muted)">{{topicCount}} saved</span>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px">
+        <sc-for list="{{topics}}" as="t" hint-placeholder-count="8">
+          <button onClick="{{t.toggle}}" aria-pressed="{{t.on}}" style="{{t.style}}">{{t.label}}</button>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="display: flex; flex-direction: column; gap: 10px">
+      <h2 style="margin: 0; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px">Account</h2>
+      <div style="border-radius: 18px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column">
+        <div style="padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; border-bottom: 1px solid var(--line)">
+          <span style="font-size: 15px; font-weight: 600">Units</span>
+          <div role="group" aria-label="Units" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; padding: 4px; background: var(--surface2); border-radius: 14px">
+            <sc-for list="{{unitOpts}}" as="u" hint-placeholder-count="2">
+              <button onClick="{{u.pick}}" aria-pressed="{{u.on}}" style="{{u.style}}">{{u.label}}</button>
+            </sc-for>
+          </div>
+        </div>
+        <a href="#" style="min-height: 56px; padding: 0 16px; display: flex; align-items: center; color: var(--text); text-decoration: none; font-size: 15px; font-weight: 600; border-bottom: 1px solid var(--line)">Connected apps &amp; wearables</a>
+        <a href="#" style="min-height: 56px; padding: 0 16px; display: flex; align-items: center; color: var(--text); text-decoration: none; font-size: 15px; font-weight: 600; border-bottom: 1px solid var(--line)">Help &amp; support</a>
+        <a href="Main.dc.html" style="min-height: 56px; padding: 0 16px; display: flex; align-items: center; color: var(--flame); text-decoration: none; font-size: 15px; font-weight: 700">Log out</a>
+      </div>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"accent":{"editor":"color","default":"#C6F432","options":["#C6F432","#FF8A4C","#7CC8FF","#E9B8FF"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    let p = {}, prof = {};
+    try { p = JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {}; } catch (e) { p = {}; }
+    try { prof = JSON.parse(window.localStorage.getItem('musclex.profile') || '{}') || {}; } catch (e) { prof = {}; }
+    this.profile = prof;
+    this.allTopics = ['Training', 'Nutrition', 'Research', 'Recovery', 'Supplements', 'Events', 'Gear', 'Mindset'];
+    this.state = {
+      mode: null, accent: null, units: p.units || 'metric',
+      topics: Array.isArray(p.topics) ? p.topics : this.allTopics.slice(),
+      sw: Object.assign({ public: true, leaderboard: true, reminders: true, streak: true }, p.switches || {})
+    };
+  }
+  persist(patch) {
+    try {
+      const p = JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {};
+      window.localStorage.setItem('musclex.prefs', JSON.stringify(Object.assign(p, patch)));
+    } catch (e) {}
+  }
+  theme() {
+    let p = {};
+    try { p = JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {}; } catch (e) { p = {}; }
+    const mode = this.state.mode || this.props.theme || p.theme || 'dark';
+    const accent = this.state.accent || this.props.accent || p.accent || '#C6F432';
+    const n = parseInt(accent.slice(1), 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    const dk = (v) => Math.round(v * 0.48).toString(16).padStart(2, '0');
+    const light = mode === 'light';
+    const T = light
+      ? { bg: '#F5F5F0', surface: '#FFFFFF', surface2: '#ECEDE6', line: '#DEDFD6', text: '#141512', muted: '#5E6158', nav: '#FFFFFF', strong: '#141512', onStrong: '#FFFFFF', flame: '#C2410C', flameSoft: '#FDE7DA', sky: '#1D5FA3', violet: '#7A3FA0' }
+      : { bg: '#0E0F0C', surface: '#1A1C17', surface2: '#24271F', line: '#2A2D25', text: '#F2F2EE', muted: '#A3A69C', nav: '#121310', strong: '#F2F2EE', onStrong: '#0E0F0C', flame: '#FF8A4C', flameSoft: '#2A1A10', sky: '#7CC8FF', violet: '#E9B8FF' };
+    const vars = Object.keys(T).map((k) => '--' + k + ':' + T[k]).join(';') + ';--accent:' + accent + ';--accentInk:' + (light ? '#' + dk(r) + dk(g) + dk(b) : accent) + ';--accentSoft:rgba(' + r + ',' + g + ',' + b + ',' + (light ? 0.18 : 0.14) + ');--onAccent:#0E0F0C;';
+    return { vars, mode, accent, light };
+  }
+  renderVals() {
+    const th = this.theme();
+    const st = this.state;
+    const prof = this.profile;
+    const goals = { lose: 'Lose weight', gain: 'Gain weight', muscle: 'Build muscle', maintain: 'Maintain', recomp: 'Recomp' };
+    const name = prof.name || 'Athlete';
+    const swatchDefs = [['#C6F432', 'Volt lime'], ['#FF8A4C', 'Ember orange'], ['#7CC8FF', 'Sky blue'], ['#E9B8FF', 'Lilac'], ['#5EEAD4', 'Mint'], ['#FFD43B', 'Gold']];
+    const switchDefs = [
+      ['public', 'Public progress', 'Anyone can view your journey and streak'],
+      ['leaderboard', 'Show on leaderboards', 'Appear in Top streaks'],
+      ['reminders', 'Workout reminders', 'A nudge on training days'],
+      ['streak', 'Streak alerts', 'Warn me before my streak breaks']
+    ];
+    return {
+      vars: th.vars,
+      name, initial: name.charAt(0).toUpperCase(),
+      summary: (goals[prof.goal] || 'Build muscle') + ' · ' + (st.units === 'imperial' ? Math.round((prof.weight || 72) * 2.20462) + ' lb' : (prof.weight || 72) + ' kg') + ' · Member since Nov 2026',
+      modes: [['dark', 'Dark'], ['light', 'Light']].map(([id, label]) => ({ label, on: th.mode === id,
+        pick: () => { this.setState({ mode: id }); this.persist({ theme: id }); },
+        style: 'height:44px;border:0;border-radius:10px;font-size:14px;font-weight:600;' + (th.mode === id ? 'background:var(--strong);color:var(--onStrong);' : 'background:transparent;color:var(--muted);') })),
+      swatches: swatchDefs.map(([hex, nm]) => {
+        const on = th.accent.toLowerCase() === hex.toLowerCase();
+        return { name: nm, on, pick: () => { this.setState({ accent: hex }); this.persist({ accent: hex }); },
+          style: 'width:44px;height:44px;border-radius:22px;background:' + hex + ';box-sizing:border-box;' + (on ? 'border:3px solid var(--bg);box-shadow:0 0 0 3px var(--text);' : 'border:0;') };
+      }),
+      switches: switchDefs.map(([id, label, desc], i) => {
+        const on = !!st.sw[id];
+        return { label, desc, on,
+          toggle: () => { const sw = { ...this.state.sw, [id]: !this.state.sw[id] }; this.setState({ sw }); this.persist({ switches: sw }); },
+          row: 'display:flex;align-items:center;gap:12px;min-height:64px;padding:10px 16px;' + (i < switchDefs.length - 1 ? 'border-bottom:1px solid var(--line);' : ''),
+          track: 'width:52px;height:32px;flex-shrink:0;border-radius:16px;border:0;padding:3px;display:flex;align-items:center;box-sizing:border-box;' + (on ? 'background:var(--accentInk);justify-content:flex-end;' : 'background:var(--line);justify-content:flex-start;') };
+      }),
+      unitOpts: [['metric', 'Metric · kg, cm'], ['imperial', 'Imperial · lb, ft']].map(([id, label]) => ({ label, on: st.units === id,
+        pick: () => { this.setState({ units: id }); this.persist({ units: id }); },
+        style: 'height:44px;border:0;border-radius:10px;font-size:13px;font-weight:600;' + (st.units === id ? 'background:var(--strong);color:var(--onStrong);' : 'background:transparent;color:var(--muted);') })),
+      topicCount: st.topics.length,
+      topics: this.allTopics.map((t) => {
+        const on = st.topics.indexOf(t) >= 0;
+        return { label: t, on,
+          toggle: () => { const cur = this.state.topics; const next = on ? cur.filter((x) => x !== t) : cur.concat([t]); this.setState({ topics: next }); this.persist({ topics: next }); },
+          style: 'height:44px;padding:0 16px;border-radius:22px;font-size:14px;font-weight:600;' + (on ? 'border:0;background:var(--accent);color:var(--onAccent);' : 'border:1px solid var(--line);background:var(--surface);color:var(--text);') };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

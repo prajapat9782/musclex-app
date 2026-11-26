@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MuscleX · Community</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+button,input{font-family:inherit}
+button{cursor:pointer}
+</style>
+</helmet>
+<div style="{{vars}} width: 390px; height: 844px; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; overflow: hidden">
+  <div style="flex: 1; overflow-y: auto; padding: 56px 20px 24px; display: flex; flex-direction: column; gap: 18px">
+    <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -0.5px">Community</h1>
+
+    <label style="display: flex; align-items: center; gap: 10px; height: 48px; padding: 0 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; color: var(--muted)">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Search athletes</span>
+      <input type="search" placeholder="Search athletes" style="flex: 1; background: transparent; border: 0; outline: none; color: var(--text); font-size: 15px">
+    </label>
+
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline">
+        <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700">Top streaks this month</h2>
+        <a href="#" style="font-size: 13px; font-weight: 700; color: var(--accentInk); text-decoration: none">See all</a>
+      </div>
+      <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px">
+        <sc-for list="{{leaders}}" as="l" hint-placeholder-count="4">
+          <a href="Athlete.dc.html" style="min-width: 104px; padding: 14px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-decoration: none; color: var(--text)">
+            <div style="{{l.avatarStyle}}">{{l.initials}}</div>
+            <span style="font-size: 13px; font-weight: 600">{{l.name}}</span>
+            <span style="font-size: 13px; font-weight: 700; color: var(--flame); display: flex; align-items: center; gap: 4px">
+              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4 0 7-3 7-7 0-4-3-6-4-10-2 2-3 4-3 6-1-1-2-2-2-4-2 2-5 5-5 8 0 4 3 7 7 7z"/></svg>
+              {{l.streak}}
+            </span>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+
+    <div role="group" aria-label="Feed" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; padding: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px">
+      <sc-for list="{{tabs}}" as="t" hint-placeholder-count="2">
+        <button onClick="{{t.pick}}" aria-pressed="{{t.on}}" style="{{t.style}}">{{t.label}}</button>
+      </sc-for>
+    </div>
+
+    <sc-for list="{{posts}}" as="p" hint-placeholder-count="3">
+      <article style="background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+        <div style="display: flex; align-items: center; gap: 12px">
+          <div style="{{p.avatarStyle}}">{{p.initials}}</div>
+          <div style="display: flex; flex-direction: column; gap: 2px; flex: 1">
+            <span style="font-size: 15px; font-weight: 600">{{p.name}}</span>
+            <span style="font-size: 12px; color: var(--muted)">{{p.meta}}</span>
+          </div>
+          <span style="font-size: 12px; font-weight: 700; color: var(--flame); background: var(--flameSoft); padding: 6px 10px; border-radius: 10px; display: flex; align-items: center; gap: 4px">
+            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4 0 7-3 7-7 0-4-3-6-4-10-2 2-3 4-3 6-1-1-2-2-2-4-2 2-5 5-5 8 0 4 3 7 7 7z"/></svg>
+            {{p.streak}} days
+          </span>
+        </div>
+        <p style="margin: 0; font-size: 15px; line-height: 1.45">{{p.text}}</p>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 12px; background: var(--surface2); border-radius: 14px">
+          <sc-for list="{{p.stats}}" as="s" hint-placeholder-count="3">
+            <div style="display: flex; flex-direction: column; gap: 2px">
+              <span style="font-size: 11px; color: var(--muted)">{{s.k}}</span>
+              <span style="font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 700">{{s.v}}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display: flex; gap: 8px">
+          <button onClick="{{p.cheer}}" aria-pressed="{{p.cheered}}" style="{{p.cheerStyle}}">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4 0 7-3 7-7 0-4-3-6-4-10-2 2-3 4-3 6-1-1-2-2-2-4-2 2-5 5-5 8 0 4 3 7 7 7z"/></svg>
+            Cheer · {{p.cheers}}
+          </button>
+          <a href="Athlete.dc.html" style="height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--line); color: var(--text); font-size: 14px; font-weight: 600; text-decoration: none; display: flex; align-items: center">View journey</a>
+        </div>
+      </article>
+    </sc-for>
+  </div>
+  <div style="flex-shrink: 0; height: 84px">
+    <dc-import name="TabBar" active="community" hint-size="390px,84px"></dc-import>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"accent":{"editor":"color","default":"#C6F432","options":["#C6F432","#FF8A4C","#7CC8FF","#E9B8FF"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'Following', cheered: { p2: true } };
+  }
+  theme() {
+    let p = {};
+    try { p = JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {}; } catch (e) { p = {}; }
+    const mode = this.props.theme || p.theme || 'dark';
+    const accent = this.props.accent || p.accent || '#C6F432';
+    const n = parseInt(accent.slice(1), 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    const dk = (v) => Math.round(v * 0.48).toString(16).padStart(2, '0');
+    const light = mode === 'light';
+    const T = light
+      ? { bg: '#F5F5F0', surface: '#FFFFFF', surface2: '#ECEDE6', line: '#DEDFD6', text: '#141512', muted: '#5E6158', nav: '#FFFFFF', strong: '#141512', onStrong: '#FFFFFF', flame: '#C2410C', flameSoft: '#FDE7DA', sky: '#1D5FA3', violet: '#7A3FA0' }
+      : { bg: '#0E0F0C', surface: '#1A1C17', surface2: '#24271F', line: '#2A2D25', text: '#F2F2EE', muted: '#A3A69C', nav: '#121310', strong: '#F2F2EE', onStrong: '#0E0F0C', flame: '#FF8A4C', flameSoft: '#2A1A10', sky: '#7CC8FF', violet: '#E9B8FF' };
+    const vars = Object.keys(T).map((k) => '--' + k + ':' + T[k]).join(';') + ';--accent:' + accent + ';--accentInk:' + (light ? '#' + dk(r) + dk(g) + dk(b) : accent) + ';--accentSoft:rgba(' + r + ',' + g + ',' + b + ',' + (light ? 0.18 : 0.14) + ');--onAccent:#0E0F0C;';
+    return { vars, mode, accent, light };
+  }
+  renderVals() {
+    const tints = ['#C6F432', '#FF8A4C', '#7CC8FF', '#E9B8FF'];
+    const av = (i, size) => 'width:' + size + 'px;height:' + size + 'px;border-radius:' + size / 2 + 'px;flex-shrink:0;background:' + tints[i % 4] + ';color:#0E0F0C;display:flex;align-items:center;justify-content:center;font-family:\'Space Grotesk\',sans-serif;font-weight:700;font-size:' + Math.round(size * 0.36) + 'px';
+    const leaders = [
+      { name: 'Priya S.', initials: 'PS', streak: 128 },
+      { name: 'Marcus T.', initials: 'MT', streak: 96 },
+      { name: 'Leah K.', initials: 'LK', streak: 74 },
+      { name: 'Omar R.', initials: 'OR', streak: 61 }
+    ].map((l, i) => ({ ...l, avatarStyle: av(i, 52) }));
+    const tabs = ['Following', 'Trending'].map((label) => {
+      const on = this.state.tab === label;
+      return { label, on, pick: () => this.setState({ tab: label }),
+        style: 'height:44px;border:0;border-radius:10px;font-size:14px;font-weight:600;' + (on ? 'background:var(--strong);color:var(--onStrong);' : 'background:transparent;color:var(--muted);') };
+    });
+    const base = [
+      { id: 'p1', name: 'Priya Sharma', initials: 'PS', meta: 'Build muscle · 2 h ago', streak: 128, cheers: 214,
+        text: 'New deadlift PR! Six months ago I couldn’t pull the bar off the floor with good form.',
+        stats: [{ k: 'Deadlift', v: '120 kg' }, { k: 'Since Jun', v: '+45 kg' }, { k: 'Bodyweight', v: '+3.2 kg' }] },
+      { id: 'p2', name: 'Marcus Taylor', initials: 'MT', meta: 'Lose weight · 5 h ago', streak: 96, cheers: 88,
+        text: '12 weeks in. Steps, protein and sleep every single day. The habits are doing the work.',
+        stats: [{ k: 'Lost', v: '−9.4 kg' }, { k: 'Avg steps', v: '11.2k' }, { k: 'Workouts', v: '58' }] },
+      { id: 'p3', name: 'Leah Kim', initials: 'LK', meta: 'Recomp · Yesterday', streak: 74, cheers: 132,
+        text: 'Same scale weight, completely different body. Photos don’t lie.',
+        stats: [{ k: 'Body fat', v: '−4.1%' }, { k: 'Squat', v: '95 kg' }, { k: 'Weeks', v: '16' }] }
+    ];
+    const posts = (this.state.tab === 'Trending' ? base.slice().reverse() : base).map((p) => {
+      const c = !!this.state.cheered[p.id];
+      return { ...p, avatarStyle: av(base.indexOf(p), 44), cheered: c, cheers: p.cheers + (c ? 1 : 0),
+        cheer: () => this.setState({ cheered: { ...this.state.cheered, [p.id]: !this.state.cheered[p.id] } }),
+        cheerStyle: 'height:44px;padding:0 16px;border-radius:12px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;' + (c ? 'border:0;background:var(--flame);color:var(--bg);' : 'border:1px solid var(--line);background:transparent;color:var(--text);') };
+    });
+    return { vars: this.theme().vars, leaders, tabs, posts };
+  }
+}
+</script>
+</body>
+</html>

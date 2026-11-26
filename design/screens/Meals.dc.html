@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MuscleX · Meal plan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="{{vars}} width: 390px; height: 844px; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; overflow: hidden">
+  <div style="flex: 1; overflow-y: auto; padding: 56px 20px 24px; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -0.5px">Meal plan</h1>
+        <span style="font-size: 13px; color: var(--muted)">{{profileLine}}</span>
+      </div>
+      <a href="FoodDiary.dc.html" onClick="{{openDiary}}" style="height: 44px; padding: 0 14px; flex-shrink: 0; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font-size: 14px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 6px">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>
+        History
+      </a>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <span style="font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px">Your goal</span>
+      <div role="group" aria-label="Goal" style="display: flex; flex-wrap: wrap; gap: 8px">
+        <sc-for list="{{goals}}" as="g" hint-placeholder-count="5">
+          <button onClick="{{g.pick}}" aria-pressed="{{g.on}}" style="{{g.style}}">{{g.label}}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <span style="font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px">Daily target</span>
+          <span style="font-family: 'Space Grotesk', sans-serif; font-size: 48px; font-weight: 700; line-height: 1; letter-spacing: -1.5px">{{kcal}} <span style="font-size: 16px; color: var(--muted); font-weight: 500; letter-spacing: 0">kcal</span></span>
+        </div>
+        <span style="font-size: 13px; font-weight: 700; color: var(--onAccent); background: var(--accent); padding: 6px 10px; border-radius: 10px">{{delta}}</span>
+      </div>
+      <p style="margin: 0; font-size: 14px; line-height: 1.45; color: var(--muted)">{{why}}</p>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 600">Eaten {{eaten}} kcal</span><span style="color: var(--muted)">{{left}}</span></div>
+        <div style="height: 10px; border-radius: 5px; background: var(--surface2); overflow: hidden"><div style="{{eatBar}}"></div></div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+        <sc-for list="{{macros}}" as="m" hint-placeholder-count="3">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <span style="font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px"><span style="{{m.dot}}"></span>{{m.label}}</span>
+            <span style="font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700">{{m.have}}<span style="font-size: 13px; color: var(--muted); font-weight: 500"> / {{m.goal}} g</span></span>
+            <div style="height: 6px; border-radius: 3px; background: var(--surface2); overflow: hidden"><div style="{{m.bar}}"></div></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <a href="Water.dc.html" style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line); color: var(--text); text-decoration: none">
+      <div style="width: 44px; height: 44px; border-radius: 22px; background: var(--surface2); color: var(--sky); display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+        <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px; flex: 1">
+        <div style="display: flex; justify-content: space-between; font-size: 14px"><span style="font-weight: 700">Water</span><span style="color: var(--muted)">{{waterLabel}}</span></div>
+        <div style="height: 6px; border-radius: 3px; background: var(--surface2); overflow: hidden"><div style="{{waterBar}}"></div></div>
+      </div>
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--muted)"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">Today’s meals</h2>
+      <sc-for list="{{meals}}" as="m" hint-placeholder-count="4">
+        <div style="display: flex; align-items: center; gap: 10px; padding: 6px 10px 6px 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px">
+          <a href="MealDetail.dc.html" onClick="{{m.open}}" style="display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; padding: 8px; border-radius: 12px; color: var(--text); text-decoration: none">
+            <span style="font-size: 12px; font-weight: 600; color: var(--muted)">{{m.slot}} · {{m.state}}</span>
+            <span style="font-size: 15px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{m.name}}</span>
+            <span style="font-size: 12px; color: var(--muted)">{{m.kcal}} kcal · {{m.p}} g protein</span>
+          </a>
+          <sc-if value="{{m.logged}}" hint-placeholder-val="{{ false }}">
+            <span style="height: 36px; padding: 0 10px; border-radius: 10px; background: var(--accentSoft); color: var(--accentInk); font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 4px; flex-shrink: 0">
+              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>Logged</span>
+          </sc-if>
+          <sc-if value="{{m.notLogged}}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{m.log}}" aria-label="{{m.logLabel}}" style="height: 44px; min-width: 64px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface2); color: var(--text); font-size: 14px; font-weight: 700; flex-shrink: 0">Log</button>
+          </sc-if>
+        </div>
+      </sc-for>
+      <a href="FoodLog.dc.html" onClick="{{openLog}}" style="height: 52px; border-radius: 16px; border: 1px dashed var(--line); color: var(--text); font-size: 15px; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Log something else</a>
+    </div>
+  </div>
+  <div style="flex-shrink: 0; height: 84px">
+    <dc-import name="TabBar" active="meals" hint-size="390px,84px"></dc-import>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"accent":{"editor":"color","default":"#C6F432","options":["#C6F432","#FF8A4C","#7CC8FF","#E9B8FF"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.TODAY = '2026-11-25';
+    let s = {};
+    try { s = JSON.parse(window.localStorage.getItem('musclex.profile') || '{}') || {}; } catch (e) { s = {}; }
+    this.profile = Object.assign({ sex: 'male', age: 26, height: 178, weight: 72, target: 68, goal: 'muscle', activity: 'moderate' }, s);
+    this.state = { goal: this.profile.goal, diary: this.loadDiary() };
+  }
+  theme() {
+    let p = {};
+    try { p = JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {}; } catch (e) { p = {}; }
+    const mode = this.props.theme || p.theme || 'dark';
+    const accent = this.props.accent || p.accent || '#C6F432';
+    const n = parseInt(accent.slice(1), 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    const dk = (v) => Math.round(v * 0.48).toString(16).padStart(2, '0');
+    const light = mode === 'light';
+    const T = light
+      ? { bg: '#F5F5F0', surface: '#FFFFFF', surface2: '#ECEDE6', line: '#DEDFD6', text: '#141512', muted: '#5E6158', nav: '#FFFFFF', strong: '#141512', onStrong: '#FFFFFF', flame: '#C2410C', flameSoft: '#FDE7DA', sky: '#1D5FA3', violet: '#7A3FA0' }
+      : { bg: '#0E0F0C', surface: '#1A1C17', surface2: '#24271F', line: '#2A2D25', text: '#F2F2EE', muted: '#A3A69C', nav: '#121310', strong: '#F2F2EE', onStrong: '#0E0F0C', flame: '#FF8A4C', flameSoft: '#2A1A10', sky: '#7CC8FF', violet: '#E9B8FF' };
+    const vars = Object.keys(T).map((k) => '--' + k + ':' + T[k]).join(';') + ';--accent:' + accent + ';--accentInk:' + (light ? '#' + dk(r) + dk(g) + dk(b) : accent) + ';--accentSoft:rgba(' + r + ',' + g + ',' + b + ',' + (light ? 0.18 : 0.14) + ');--onAccent:#0E0F0C;';
+    return { vars, mode, accent, light };
+  }
+  lib() {
+    const FOODS = {
+      oats: ['Rolled oats', '50 g', 190, 7, 32, 3.5], whey: ['Whey protein', '1 scoop · 30 g', 120, 24, 3, 1.5], banana: ['Banana', '1 medium', 105, 1.3, 27, 0.4],
+      pb: ['Peanut butter', '1 tbsp · 16 g', 95, 3.5, 3, 8], chicken: ['Chicken breast', '150 g cooked', 248, 46, 0, 5.4], rice: ['White rice', '1 cup cooked', 205, 4.3, 45, 0.4],
+      avocado: ['Avocado', '½ fruit', 120, 1.5, 6, 11], greens: ['Mixed salad greens', '1 bowl', 20, 1.5, 3.5, 0.3], yogurt: ['Greek yogurt 2%', '170 g', 150, 17, 8, 4],
+      berries: ['Mixed berries', '1 cup', 70, 1, 17, 0.5], honey: ['Honey', '1 tsp', 21, 0, 6, 0], salmon: ['Salmon fillet', '150 g', 312, 34, 0, 19],
+      sweetpotato: ['Sweet potato', '1 medium', 112, 2, 26, 0.1], broccoli: ['Broccoli', '1 cup', 31, 2.5, 6, 0.3], eggs: ['Whole eggs', '2 large', 143, 12.6, 0.7, 9.5],
+      toast: ['Wholegrain toast', '1 slice', 80, 4, 14, 1], paneer: ['Paneer', '100 g', 265, 18, 1.2, 21], dal: ['Dal (lentil curry)', '1 cup', 230, 13, 32, 6],
+      roti: ['Roti / chapati', '1 piece', 120, 3, 18, 3.7], milk: ['Milk 2%', '250 ml', 122, 8, 12, 4.8], almonds: ['Almonds', '28 g', 164, 6, 6, 14],
+      apple: ['Apple', '1 medium', 95, 0.5, 25, 0.3], pasta: ['Pasta', '1 cup cooked', 220, 8, 43, 1.3], beef: ['Lean beef mince', '150 g cooked', 330, 39, 0, 19],
+      tofu: ['Firm tofu', '150 g', 215, 23, 5, 12], oil: ['Olive oil', '1 tbsp', 119, 0, 0, 13.5]
+    };
+    const SEED = {
+      '2026-11-19': [['breakfast', 'eggs', 1], ['breakfast', 'toast', 2], ['lunch', 'chicken', 1], ['lunch', 'rice', 1.5], ['snack', 'whey', 1], ['snack', 'banana', 1], ['dinner', 'dal', 1], ['dinner', 'roti', 2], ['dinner', 'paneer', 1]],
+      '2026-11-20': [['breakfast', 'oats', 1.5], ['breakfast', 'whey', 1], ['breakfast', 'pb', 1], ['lunch', 'beef', 1], ['lunch', 'pasta', 1.5], ['snack', 'almonds', 1], ['dinner', 'salmon', 1], ['dinner', 'sweetpotato', 2], ['dinner', 'broccoli', 1]],
+      '2026-11-21': [['breakfast', 'yogurt', 1], ['breakfast', 'berries', 1], ['lunch', 'chicken', 1], ['lunch', 'rice', 1], ['lunch', 'avocado', 1], ['dinner', 'tofu', 1], ['dinner', 'rice', 1], ['dinner', 'broccoli', 1]],
+      '2026-11-22': [['breakfast', 'eggs', 1.5], ['breakfast', 'toast', 2], ['breakfast', 'milk', 1], ['lunch', 'dal', 1.5], ['lunch', 'roti', 3], ['snack', 'apple', 1], ['snack', 'almonds', 1], ['dinner', 'chicken', 1.5], ['dinner', 'pasta', 1.5], ['dinner', 'oil', 1]],
+      '2026-11-23': [['breakfast', 'oats', 1.5], ['breakfast', 'whey', 1], ['breakfast', 'banana', 1], ['lunch', 'paneer', 1], ['lunch', 'roti', 2], ['lunch', 'greens', 1], ['snack', 'yogurt', 1], ['dinner', 'beef', 1], ['dinner', 'rice', 1.5], ['dinner', 'broccoli', 1]],
+      '2026-11-24': [['breakfast', 'oats', 1], ['breakfast', 'whey', 1], ['breakfast', 'pb', 2], ['lunch', 'chicken', 1], ['lunch', 'rice', 1.5], ['lunch', 'avocado', 1], ['snack', 'whey', 1], ['snack', 'milk', 1], ['dinner', 'salmon', 1], ['dinner', 'sweetpotato', 1.5], ['dinner', 'broccoli', 1]],
+      '2026-11-25': [['breakfast', 'oats', 1.5], ['breakfast', 'whey', 1], ['breakfast', 'banana', 1], ['breakfast', 'pb', 1.5], ['lunch', 'chicken', 1.25], ['lunch', 'rice', 1.5], ['lunch', 'avocado', 1], ['lunch', 'greens', 1]]
+    };
+    return { FOODS, SEED, SLOTS: [['breakfast', 'Breakfast'], ['lunch', 'Lunch'], ['snack', 'Snacks'], ['dinner', 'Dinner']] };
+  }
+  loadDiary() {
+    let d = null;
+    try { d = JSON.parse(window.localStorage.getItem('musclex.diary') || 'null'); } catch (e) { d = null; }
+    if (!d || typeof d !== 'object') {
+      const S = this.lib().SEED;
+      d = {};
+      Object.keys(S).forEach((k) => { d[k] = S[k].map((e, i) => ({ u: k + '-' + i, s: e[0], f: e[1], q: e[2] })); });
+      try { window.localStorage.setItem('musclex.diary', JSON.stringify(d)); } catch (e) {}
+    }
+    return d;
+  }
+  nut(e) {
+    const b = e.f ? this.lib().FOODS[e.f] : [e.n, e.sv || 'Custom', e.k, e.p, e.c, e.x];
+    if (!b) return { name: 'Unknown', serving: '', kcal: 0, p: 0, c: 0, f: 0 };
+    return { name: b[0], serving: b[1], kcal: (b[2] || 0) * e.q, p: (b[3] || 0) * e.q, c: (b[4] || 0) * e.q, f: (b[5] || 0) * e.q };
+  }
+  setView(slot, to) {
+    try { window.localStorage.setItem('musclex.view', JSON.stringify({ date: this.TODAY, slot, from: 'Meals.dc.html', parent: 'Meals.dc.html' })); } catch (e) {}
+  }
+  pickGoal(id) {
+    this.setState({ goal: id });
+    try {
+      const s = JSON.parse(window.localStorage.getItem('musclex.profile') || '{}') || {};
+      s.goal = id;
+      window.localStorage.setItem('musclex.profile', JSON.stringify(Object.assign({}, this.profile, s)));
+    } catch (e) {}
+  }
+  renderVals() {
+    const p = this.profile, F = this.lib().FOODS;
+    const acts = { sedentary: ['Mostly sitting', 1.2], light: ['Lightly active', 1.375], moderate: ['Moderately active', 1.55], very: ['Very active', 1.725], athlete: ['Athlete', 1.9] };
+    const act = acts[p.activity] || acts.moderate;
+    const bmr = 10 * p.weight + 6.25 * p.height - 5 * p.age + (p.sex === 'male' ? 5 : -161);
+    const maint = Math.round(bmr * act[1] / 10) * 10;
+    const defs = [
+      { id: 'lose', label: 'Lose weight', adj: -500, pk: 2.2, why: 'A 500 kcal daily deficit targets about 0.5 kg of fat loss per week. High protein protects your muscle while you cut.' },
+      { id: 'gain', label: 'Gain weight', adj: 500, pk: 1.8, why: 'A 500 kcal surplus supports steady gain of roughly 0.5 kg per week. Prioritise whole-food calories.' },
+      { id: 'muscle', label: 'Build muscle', adj: 300, pk: 2.0, why: 'A lean 300 kcal surplus fuels muscle growth while keeping fat gain low. Pair it with progressive overload.' },
+      { id: 'maintain', label: 'Maintain', adj: 0, pk: 1.6, why: 'Eat at maintenance to hold your weight steady while you keep training and performing.' },
+      { id: 'recomp', label: 'Recomp', adj: -200, pk: 2.2, why: 'A small deficit with very high protein lets you lose fat and build muscle at the same time.' }
+    ];
+    const cur = defs.find((d) => d.id === this.state.goal) || defs[2];
+    const kcal = Math.max(p.sex === 'male' ? 1500 : 1200, maint + cur.adj);
+    const protein = Math.round(cur.pk * p.weight);
+    const fat = Math.round((kcal * 0.25) / 9);
+    const carbs = Math.max(0, Math.round((kcal - protein * 4 - fat * 9) / 4));
+    const today = this.state.diary[this.TODAY] || [];
+    const tot = today.reduce((a, e) => { const n = this.nut(e); a.kcal += n.kcal; a.p += n.p; a.c += n.c; a.f += n.f; return a; }, { kcal: 0, p: 0, c: 0, f: 0 });
+    const PLAN = {
+      breakfast: [['oats', 1], ['whey', 1], ['banana', 1], ['pb', 1], 0.25, '7:30'],
+      lunch: [['chicken', 1], ['rice', 1], ['avocado', 1], ['greens', 1], 0.35, '13:00'],
+      snack: [['yogurt', 1], ['berries', 1], ['honey', 1], 0.10, '16:30'],
+      dinner: [['salmon', 1], ['sweetpotato', 1], ['broccoli', 1], 0.30, '20:00']
+    };
+    const meals = this.lib().SLOTS.map(([id, label]) => {
+      const def = PLAN[id], time = def[def.length - 1], share = def[def.length - 2], foods = def.slice(0, def.length - 2);
+      const logged = today.filter((e) => e.s === id);
+      if (logged.length) {
+        const n = logged.map((e) => this.nut(e));
+        return { slot: label, state: 'Logged', logged: true, notLogged: false,
+          name: n.map((x) => x.name).join(', '),
+          kcal: Math.round(n.reduce((a, x) => a + x.kcal, 0)).toLocaleString('en-US'), p: Math.round(n.reduce((a, x) => a + x.p, 0)),
+          open: () => this.setView(id), log: () => {}, logLabel: '' };
+      }
+      const base = foods.reduce((a, f) => a + F[f[0]][2], 0);
+      const factor = (kcal * share) / base;
+      const sug = foods.map((f) => [f[0], Math.max(0.5, Math.round(factor * 4) / 4)]);
+      const sk = sug.reduce((a, f) => a + F[f[0]][2] * f[1], 0), sp = sug.reduce((a, f) => a + F[f[0]][3] * f[1], 0);
+      return { slot: label, state: 'Suggested · ' + time, logged: false, notLogged: true,
+        name: sug.map((f) => F[f[0]][0]).join(', '),
+        kcal: Math.round(sk).toLocaleString('en-US'), p: Math.round(sp),
+        open: () => this.setView(id), logLabel: 'Log suggested ' + label.toLowerCase(),
+        log: () => {
+          const d = Object.assign({}, this.state.diary);
+          d[this.TODAY] = (d[this.TODAY] || []).concat(sug.map((f, i) => ({ u: 'u' + Date.now() + i, s: id, f: f[0], q: f[1] })));
+          try { window.localStorage.setItem('musclex.diary', JSON.stringify(d)); } catch (e) {}
+          this.setState({ diary: d });
+        } };
+    });
+    const fmt = (n) => Math.round(n).toLocaleString('en-US');
+    const left = kcal - tot.kcal;
+    const mac = (label, color, have, goal) => ({ label, goal, have: Math.round(have), dot: 'width:8px;height:8px;border-radius:4px;background:' + color,
+      bar: 'height:100%;border-radius:3px;background:' + color + ';width:' + Math.min(100, Math.round(have / goal * 100)) + '%' });
+    return {
+      vars: this.theme().vars,
+      profileLine: (() => { let u = 'metric'; try { u = (JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {}).units || 'metric'; } catch (e) {} if (u !== 'imperial') return p.weight + ' kg · ' + Math.round(p.height) + ' cm'; const t = Math.round(p.height / 2.54); return Math.round(p.weight * 2.20462) + ' lb · ' + Math.floor(t / 12) + '′' + (t % 12) + '″'; })() + ' · ' + act[0] + ' · Maintenance ≈ ' + fmt(maint) + ' kcal',
+      goals: defs.map((d) => {
+        const on = d.id === cur.id;
+        return { label: d.label, on, pick: () => this.pickGoal(d.id),
+          style: 'height:44px;padding:0 16px;border-radius:22px;font-size:14px;font-weight:600;' + (on ? 'border:0;background:var(--accent);color:var(--onAccent);' : 'border:1px solid var(--line);background:var(--surface);color:var(--text);') };
+      }),
+      kcal: fmt(kcal),
+      delta: cur.adj === 0 ? 'Maintenance' : (cur.adj > 0 ? '+' : '−') + Math.abs(cur.adj) + ' kcal',
+      why: cur.why,
+      eaten: fmt(tot.kcal), left: left >= 0 ? fmt(left) + ' left' : fmt(-left) + ' over',
+      eatBar: 'height:100%;border-radius:5px;background:' + (left >= 0 ? 'var(--accentInk)' : 'var(--flame)') + ';width:' + Math.min(100, Math.round(tot.kcal / kcal * 100)) + '%',
+      macros: [mac('Protein', 'var(--accentInk)', tot.p, protein), mac('Carbs', 'var(--sky)', tot.c, carbs), mac('Fat', 'var(--flame)', tot.f, fat)],
+      meals,
+      ...(() => {
+        let w = null, pr = {};
+        try { w = JSON.parse(window.localStorage.getItem('musclex.water') || 'null'); } catch (e) { w = null; }
+        try { pr = JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {}; } catch (e) { pr = {}; }
+        const ml = (w && w[this.TODAY] !== undefined) ? w[this.TODAY] : 1500;
+        const goal = Math.max(1500, Math.round((p.weight * 35) / 250) * 250);
+        const vol = (v) => pr.units === 'imperial' ? Math.round(v * 0.033814) + ' oz' : (v / 1000).toFixed(1) + ' L';
+        return { waterLabel: vol(ml) + ' of ' + vol(goal), waterBar: 'height:100%;border-radius:3px;background:var(--sky);width:' + Math.min(100, Math.round(ml / goal * 100)) + '%' };
+      })(),
+      openDiary: () => this.setView('breakfast'),
+      openLog: () => this.setView('snack')
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MuscleX · Workout complete</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+button,textarea{font-family:inherit}
+button{cursor:pointer}
+</style>
+</helmet>
+<div style="{{vars}} width: 390px; height: 844px; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; overflow: hidden">
+  <div style="flex: 1; overflow-y: auto; padding: 64px 20px 20px; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center">
+      <div style="width: 88px; height: 88px; border-radius: 28px; background: var(--accent); color: var(--onAccent); display: flex; align-items: center; justify-content: center">
+        <svg aria-hidden="true" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>
+      </div>
+      <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -1px">Workout complete</h1>
+      <p style="margin: 0; font-size: 15px; color: var(--muted)">Push day · Wednesday, 25 Nov</p>
+    </div>
+
+    <div style="padding: 16px; border-radius: 20px; background: var(--flameSoft); display: flex; align-items: center; gap: 14px">
+      <svg aria-hidden="true" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--flame)"><path d="M12 22c4 0 7-3 7-7 0-4-3-6-4-10-2 2-3 4-3 6-1-1-2-2-2-4-2 2-5 5-5 8 0 4 3 7 7 7z"/></svg>
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--flame)">24-day streak</span>
+        <span style="font-size: 13px; color: var(--text)">17 more days to beat your best</span>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+      <div style="padding: 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 12px; color: var(--muted)">Duration</span>
+        <span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700">52 min</span>
+      </div>
+      <div style="padding: 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 12px; color: var(--muted)">Volume</span>
+        <span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700">8,940 kg</span>
+      </div>
+      <div style="padding: 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 12px; color: var(--muted)">Sets</span>
+        <span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700">17</span>
+      </div>
+      <div style="padding: 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 12px; color: var(--muted)">Calories burned</span>
+        <span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700">~310</span>
+      </div>
+    </div>
+
+    <div style="padding: 16px; border-radius: 18px; background: var(--surface); border: 1px solid var(--accentInk); display: flex; align-items: center; gap: 14px">
+      <div style="width: 44px; height: 44px; border-radius: 12px; background: var(--accentSoft); color: var(--accentInk); display: flex; align-items: center; justify-content: center">
+        <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 12px; font-weight: 700; color: var(--accentInk); text-transform: uppercase; letter-spacing: 1px">New personal record</span>
+        <span style="font-size: 16px; font-weight: 700">Bench press · 82.5 kg × 8</span>
+      </div>
+    </div>
+
+    <div style="padding: 16px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 2px">
+          <span style="font-size: 15px; font-weight: 700">Share to community</span>
+          <span style="font-size: 12px; color: var(--muted)">Followers see your stats and streak</span>
+        </div>
+        <button onClick="{{toggleShare}}" role="switch" aria-checked="{{share}}" aria-label="Share to community" style="{{switchStyle}}"><span style="{{knob}}"></span></button>
+      </div>
+      <sc-if value="{{share}}" hint-placeholder-val="{{ true }}">
+        <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: var(--muted)">Caption
+          <textarea rows="2" placeholder="How did it feel?" style="padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface2); color: var(--text); font-size: 15px; resize: none; outline: none"></textarea>
+        </label>
+      </sc-if>
+    </div>
+  </div>
+  <div style="padding: 12px 20px 36px; flex-shrink: 0">
+    <a href="{{doneHref}}" style="height: 56px; border-radius: 16px; background: var(--accent); color: var(--onAccent); font-size: 16px; font-weight: 700; text-decoration: none; display: flex; align-items: center; justify-content: center">{{doneLabel}}</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"accent":{"editor":"color","default":"#C6F432","options":["#C6F432","#FF8A4C","#7CC8FF","#E9B8FF"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { share: true };
+  }
+  theme() {
+    let p = {};
+    try { p = JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {}; } catch (e) { p = {}; }
+    const mode = this.props.theme || p.theme || 'dark';
+    const accent = this.props.accent || p.accent || '#C6F432';
+    const n = parseInt(accent.slice(1), 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    const dk = (v) => Math.round(v * 0.48).toString(16).padStart(2, '0');
+    const light = mode === 'light';
+    const T = light
+      ? { bg: '#F5F5F0', surface: '#FFFFFF', surface2: '#ECEDE6', line: '#DEDFD6', text: '#141512', muted: '#5E6158', nav: '#FFFFFF', strong: '#141512', onStrong: '#FFFFFF', flame: '#C2410C', flameSoft: '#FDE7DA', sky: '#1D5FA3', violet: '#7A3FA0' }
+      : { bg: '#0E0F0C', surface: '#1A1C17', surface2: '#24271F', line: '#2A2D25', text: '#F2F2EE', muted: '#A3A69C', nav: '#121310', strong: '#F2F2EE', onStrong: '#0E0F0C', flame: '#FF8A4C', flameSoft: '#2A1A10', sky: '#7CC8FF', violet: '#E9B8FF' };
+    const vars = Object.keys(T).map((k) => '--' + k + ':' + T[k]).join(';') + ';--accent:' + accent + ';--accentInk:' + (light ? '#' + dk(r) + dk(g) + dk(b) : accent) + ';--accentSoft:rgba(' + r + ',' + g + ',' + b + ',' + (light ? 0.18 : 0.14) + ');--onAccent:#0E0F0C;';
+    return { vars, mode, accent, light };
+  }
+  renderVals() {
+    const on = this.state.share;
+    return {
+      vars: this.theme().vars,
+      share: on,
+      toggleShare: () => this.setState({ share: !this.state.share }),
+      switchStyle: 'width:52px;height:32px;flex-shrink:0;border-radius:16px;border:0;padding:3px;display:flex;align-items:center;box-sizing:border-box;' + (on ? 'background:var(--accentInk);justify-content:flex-end;' : 'background:var(--line);justify-content:flex-start;'),
+      knob: 'width:26px;height:26px;border-radius:13px;background:#FFFFFF;display:block',
+      doneHref: on ? 'Community.dc.html' : 'Home.dc.html',
+      doneLabel: on ? 'Post & finish' : 'Done'
+    };
+  }
+}
+</script>
+</body>
+</html>

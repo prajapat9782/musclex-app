@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MuscleX · Water</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="{{vars}} width: 390px; height: 844px; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; overflow: hidden">
+  <div style="padding: 52px 20px 12px; display: flex; align-items: center; gap: 12px; flex-shrink: 0">
+    <a href="Meals.dc.html" aria-label="Back to meal plan" style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); color: var(--text); display: flex; align-items: center; justify-content: center">
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+    </a>
+    <div style="display: flex; flex-direction: column; gap: 2px">
+      <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700">Water</h1>
+      <span style="font-size: 13px; color: var(--muted)">Today · goal based on your body weight</span>
+    </div>
+  </div>
+
+  <div style="flex: 1; overflow-y: auto; padding: 8px 20px 32px; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px 0">
+      <div style="position: relative; width: 220px; height: 220px; color: var(--sky)">
+        <svg role="img" aria-label="{{ringLabel}}" width="220" height="220" viewBox="0 0 220 220">
+          <circle cx="110" cy="110" r="96" fill="none" style="stroke: var(--surface2)" stroke-width="18"/>
+          <circle cx="110" cy="110" r="96" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-dasharray="603.2" stroke-dashoffset="{{offset}}" transform="rotate(-90 110 110)"/>
+        </svg>
+        <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px">
+          <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg>
+          <span style="font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 700; color: var(--text); letter-spacing: -1px">{{drank}}</span>
+          <span style="font-size: 14px; color: var(--muted)">of {{goal}}</span>
+        </div>
+      </div>
+      <span style="{{statusStyle}}">{{status}}</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+      <sc-for list="{{quick}}" as="q" hint-placeholder-count="3">
+        <button onClick="{{q.add}}" aria-label="{{q.aria}}" style="height: 84px; border-radius: 18px; border: 1px solid var(--line); background: var(--surface); color: var(--text); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px">
+          <span style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">+{{q.label}}</span>
+          <span style="font-size: 12px; color: var(--muted)">{{q.name}}</span>
+        </button>
+      </sc-for>
+    </div>
+    <button onClick="{{undo}}" disabled="{{noUndo}}" style="{{undoStyle}}">Undo last ({{lastLabel}})</button>
+
+    <div style="background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline">
+        <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700">Last 7 days</h2>
+        <span style="font-size: 13px; color: var(--muted)">{{hitLabel}}</span>
+      </div>
+      <div style="position: relative; height: 130px; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; align-items: end">
+        <div style="position: absolute; left: 0; right: 0; bottom: 100px; border-top: 1px dashed var(--muted); opacity: 0.6"></div>
+        <sc-for list="{{bars}}" as="b" hint-placeholder-count="7">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: flex-end">
+            <div style="{{b.bar}}"></div>
+            <span style="{{b.labelStyle}}">{{b.label}}</span>
+          </div>
+        </sc-for>
+      </div>
+      <span style="font-size: 12px; color: var(--muted)">Dashed line = daily goal</span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line)">
+      <div style="display: flex; flex-direction: column; gap: 2px; flex: 1">
+        <span style="font-size: 15px; font-weight: 600">Remind me to drink</span>
+        <span style="font-size: 12px; color: var(--muted)">Every 2 hours, 8:00–20:00</span>
+      </div>
+      <button onClick="{{toggleRemind}}" role="switch" aria-checked="{{remind}}" aria-label="Remind me to drink" style="{{remindTrack}}"><span style="width: 26px; height: 26px; border-radius: 13px; background: #FFFFFF; display: block"></span></button>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"accent":{"editor":"color","default":"#C6F432","options":["#C6F432","#FF8A4C","#7CC8FF","#E9B8FF"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.TODAY = '2026-11-25';
+    let w = null;
+    try { w = JSON.parse(window.localStorage.getItem('musclex.water') || 'null'); } catch (e) { w = null; }
+    if (!w || typeof w !== 'object') {
+      w = { '2026-11-19': 2500, '2026-11-20': 2250, '2026-11-21': 1750, '2026-11-22': 2750, '2026-11-23': 2500, '2026-11-24': 2000, '2026-11-25': 1500 };
+      try { window.localStorage.setItem('musclex.water', JSON.stringify(w)); } catch (e) {}
+    }
+    let pr = {}, prof = {};
+    try { pr = JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {}; } catch (e) { pr = {}; }
+    try { prof = JSON.parse(window.localStorage.getItem('musclex.profile') || '{}') || {}; } catch (e) { prof = {}; }
+    this.imp = pr.units === 'imperial';
+    this.goalMl = Math.max(1500, Math.round(((prof.weight || 72) * 35) / 250) * 250);
+    this.state = { water: w, stack: [250], remind: true };
+  }
+  theme() {
+    let p = {};
+    try { p = JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {}; } catch (e) { p = {}; }
+    const mode = this.props.theme || p.theme || 'dark';
+    const accent = this.props.accent || p.accent || '#C6F432';
+    const n = parseInt(accent.slice(1), 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    const dk = (v) => Math.round(v * 0.48).toString(16).padStart(2, '0');
+    const light = mode === 'light';
+    const T = light
+      ? { bg: '#F5F5F0', surface: '#FFFFFF', surface2: '#ECEDE6', line: '#DEDFD6', text: '#141512', muted: '#5E6158', nav: '#FFFFFF', strong: '#141512', onStrong: '#FFFFFF', flame: '#C2410C', flameSoft: '#FDE7DA', sky: '#1D5FA3', violet: '#7A3FA0' }
+      : { bg: '#0E0F0C', surface: '#1A1C17', surface2: '#24271F', line: '#2A2D25', text: '#F2F2EE', muted: '#A3A69C', nav: '#121310', strong: '#F2F2EE', onStrong: '#0E0F0C', flame: '#FF8A4C', flameSoft: '#2A1A10', sky: '#7CC8FF', violet: '#E9B8FF' };
+    const vars = Object.keys(T).map((k) => '--' + k + ':' + T[k]).join(';') + ';--accent:' + accent + ';--accentInk:' + (light ? '#' + dk(r) + dk(g) + dk(b) : accent) + ';--accentSoft:rgba(' + r + ',' + g + ',' + b + ',' + (light ? 0.18 : 0.14) + ');--onAccent:#0E0F0C;';
+    return { vars, mode, accent, light };
+  }
+  change(ml) {
+    const w = Object.assign({}, this.state.water);
+    w[this.TODAY] = Math.max(0, (w[this.TODAY] || 0) + ml);
+    try { window.localStorage.setItem('musclex.water', JSON.stringify(w)); } catch (e) {}
+    return w;
+  }
+  renderVals() {
+    const st = this.state, goal = this.goalMl, T = this.TODAY;
+    const vol = (ml) => this.imp ? Math.round(ml * 0.033814) + ' oz' : (ml / 1000).toFixed(2) + ' L';
+    const small = (ml) => this.imp ? Math.round(ml * 0.033814) + ' oz' : ml + ' ml';
+    const today = st.water[T] || 0;
+    const pct = Math.min(1, today / goal);
+    const left = goal - today;
+    const keys = [6, 5, 4, 3, 2, 1, 0].map((i) => { const d = new Date(T + 'T12:00:00'); d.setDate(d.getDate() - i); return d; });
+    const k = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    const hit = keys.filter((d) => (st.water[k(d)] || 0) >= goal).length;
+    const last = st.stack[st.stack.length - 1];
+    return {
+      vars: this.theme().vars,
+      drank: vol(today), goal: vol(goal),
+      offset: Math.round(603.2 * (1 - pct) * 10) / 10,
+      ringLabel: vol(today) + ' of ' + vol(goal) + ' today',
+      status: left <= 0 ? 'Goal reached — nice work' : vol(left) + ' to go',
+      statusStyle: 'font-size:14px;font-weight:700;padding:6px 12px;border-radius:10px;' + (left <= 0 ? 'background:var(--accentSoft);color:var(--accentInk);' : 'background:var(--surface);color:var(--text);border:1px solid var(--line);'),
+      quick: [[250, 'Glass'], [500, 'Bottle'], [750, 'Shaker']].map(([ml, name]) => ({ label: small(ml), name, aria: 'Add ' + small(ml) + ' ' + name.toLowerCase(),
+        add: () => this.setState({ water: this.change(ml), stack: this.state.stack.concat([ml]) }) })),
+      noUndo: !last, lastLabel: last ? '−' + small(last) : 'nothing',
+      undo: () => { const s = this.state.stack.slice(); const m = s.pop(); if (m) this.setState({ water: this.change(-m), stack: s }); },
+      undoStyle: 'height:48px;border-radius:14px;border:1px dashed var(--line);background:transparent;color:var(--text);font-size:14px;font-weight:600;' + (last ? '' : 'opacity:0.4;'),
+      hitLabel: 'Goal hit ' + hit + ' of 7 days',
+      bars: keys.map((d) => {
+        const ml = st.water[k(d)] || 0, isT = k(d) === T, ok = ml >= goal;
+        return { label: isT ? 'Today' : d.toLocaleDateString('en-GB', { weekday: 'narrow' }),
+          labelStyle: 'font-size:11px;font-weight:' + (isT ? '700' : '500') + ';color:' + (isT ? 'var(--text)' : 'var(--muted)'),
+          bar: 'width:100%;border-radius:8px 8px 4px 4px;height:' + Math.max(4, Math.min(118, Math.round(ml / goal * 100))) + 'px;background:' + (ok ? 'var(--sky)' : 'var(--surface2)') + ';' + (isT && !ok ? 'border:2px solid var(--sky);box-sizing:border-box;' : '') };
+      }),
+      remind: st.remind,
+      toggleRemind: () => this.setState({ remind: !this.state.remind }),
+      remindTrack: 'width:52px;height:32px;flex-shrink:0;border-radius:16px;border:0;padding:3px;display:flex;align-items:center;box-sizing:border-box;' + (st.remind ? 'background:var(--accentInk);justify-content:flex-end;' : 'background:var(--line);justify-content:flex-start;')
+    };
+  }
+}
+</script>
+</body>
+</html>

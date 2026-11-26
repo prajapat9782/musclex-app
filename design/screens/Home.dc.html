@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MuscleX · Home</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="{{vars}} width: 390px; height: 844px; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; overflow: hidden">
+  <div style="flex: 1; overflow-y: auto; padding: 56px 20px 24px; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <span style="font-size: 13px; color: var(--muted)">{{dateLabel}}</span>
+        <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -0.5px">Hey, {{name}}</h1>
+      </div>
+      <div style="display: flex; gap: 8px">
+        <a href="Notifications.dc.html" aria-label="Notifications, 3 unread" style="position: relative; width: 44px; height: 44px; box-sizing: border-box; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); color: var(--text); display: flex; align-items: center; justify-content: center">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg>
+          <span style="position: absolute; top: 8px; right: 9px; width: 10px; height: 10px; box-sizing: border-box; border-radius: 5px; background: var(--flame); border: 2px solid var(--surface)"></span>
+        </a>
+        <a href="Profile.dc.html" aria-label="Profile and settings" style="width: 44px; height: 44px; border-radius: 22px; background: var(--accent); color: var(--onAccent); display: flex; align-items: center; justify-content: center; text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 16px">{{initial}}</a>
+      </div>
+    </div>
+
+    <div style="background: var(--accent); color: var(--onAccent); border-radius: 24px; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start">
+        <div style="display: flex; flex-direction: column; gap: 2px">
+          <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px">Current streak</span>
+          <span style="font-family: 'Space Grotesk', sans-serif; font-size: 56px; font-weight: 700; line-height: 1; letter-spacing: -2px">23 days</span>
+          <span style="font-size: 13px; font-weight: 500">Best: 41 days · Train today to keep it alive</span>
+        </div>
+        <svg aria-hidden="true" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4 0 7-3 7-7 0-4-3-6-4-10-2 2-3 4-3 6-1-1-2-2-2-4-2 2-5 5-5 8 0 4 3 7 7 7z"/></svg>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px">
+        <sc-for list="{{week}}" as="d" hint-placeholder-count="7">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+            <span style="font-size: 11px; font-weight: 700">{{d.label}}</span>
+            <div style="{{d.style}}">
+              <sc-if value="{{d.done}}" hint-placeholder-val="{{ true }}">
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>
+              </sc-if>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px">Today’s workout</span>
+        <span style="font-size: 12px; color: var(--muted)">{{split}}</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700">Push · Chest, Shoulders &amp; Triceps</span>
+        <span style="font-size: 14px; color: var(--muted)">5 exercises · ~55 min · 17 sets</span>
+      </div>
+      <a href="Workout.dc.html" style="height: 50px; border-radius: 14px; background: var(--strong); color: var(--onStrong); font-size: 15px; font-weight: 700; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg>
+        Start workout
+      </a>
+    </div>
+
+    <a href="Meals.dc.html" style="text-decoration: none; color: var(--text); background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px">Fuel · {{goalLabel}}</span>
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--muted)"><path d="M9 6l6 6-6 6"/></svg>
+      </div>
+      <div style="display: flex; align-items: baseline; gap: 6px">
+        <span style="font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700">{{eaten}}</span>
+        <span style="font-size: 14px; color: var(--muted)">/ {{kcal}} kcal</span>
+      </div>
+      <div style="height: 8px; border-radius: 4px; background: var(--surface2); overflow: hidden">
+        <div style="{{kcalBar}}"></div>
+      </div>
+      <span style="font-size: 13px; color: var(--muted)">{{left}} kcal left · Protein {{proteinEaten}} / {{protein}} g</span>
+    </a>
+
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline">
+        <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">Daily habits</h2>
+        <span style="font-size: 13px; color: var(--muted)">{{doneCount}} of {{total}} done</span>
+      </div>
+      <sc-for list="{{habits}}" as="h" hint-placeholder-count="5">
+        <button onClick="{{h.toggle}}" aria-pressed="{{h.done}}" style="{{h.rowStyle}}">
+          <div style="{{h.boxStyle}}">
+            <sc-if value="{{h.done}}" hint-placeholder-val="{{ false }}">
+              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>
+            </sc-if>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px; flex: 1; text-align: left">
+            <span style="font-size: 15px; font-weight: 600; color: var(--text)">{{h.name}}</span>
+            <span style="font-size: 12px; color: var(--muted)">{{h.detail}}</span>
+          </div>
+          <span style="font-size: 12px; font-weight: 700; color: var(--flame); display: flex; align-items: center; gap: 4px">
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4 0 7-3 7-7 0-4-3-6-4-10-2 2-3 4-3 6-1-1-2-2-2-4-2 2-5 5-5 8 0 4 3 7 7 7z"/></svg>
+            {{h.streak}}
+          </span>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+  <div style="flex-shrink: 0; height: 84px">
+    <dc-import name="TabBar" active="home" hint-size="390px,84px"></dc-import>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"accent":{"editor":"color","default":"#C6F432","options":["#C6F432","#FF8A4C","#7CC8FF","#E9B8FF"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { done: { workout: false, water: true, sleep: true, protein: false, steps: false } };
+  }
+  theme() {
+    let p = {};
+    try { p = JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {}; } catch (e) { p = {}; }
+    const mode = this.props.theme || p.theme || 'dark';
+    const accent = this.props.accent || p.accent || '#C6F432';
+    const n = parseInt(accent.slice(1), 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    const dk = (v) => Math.round(v * 0.48).toString(16).padStart(2, '0');
+    const light = mode === 'light';
+    const T = light
+      ? { bg: '#F5F5F0', surface: '#FFFFFF', surface2: '#ECEDE6', line: '#DEDFD6', text: '#141512', muted: '#5E6158', nav: '#FFFFFF', strong: '#141512', onStrong: '#FFFFFF', flame: '#C2410C', flameSoft: '#FDE7DA', sky: '#1D5FA3', violet: '#7A3FA0' }
+      : { bg: '#0E0F0C', surface: '#1A1C17', surface2: '#24271F', line: '#2A2D25', text: '#F2F2EE', muted: '#A3A69C', nav: '#121310', strong: '#F2F2EE', onStrong: '#0E0F0C', flame: '#FF8A4C', flameSoft: '#2A1A10', sky: '#7CC8FF', violet: '#E9B8FF' };
+    const vars = Object.keys(T).map((k) => '--' + k + ':' + T[k]).join(';') + ';--accent:' + accent + ';--accentInk:' + (light ? '#' + dk(r) + dk(g) + dk(b) : accent) + ';--accentSoft:rgba(' + r + ',' + g + ',' + b + ',' + (light ? 0.18 : 0.14) + ');--onAccent:#0E0F0C;';
+    return { vars, mode, accent, light };
+  }
+  plan() {
+    let s = {};
+    try { s = JSON.parse(window.localStorage.getItem('musclex.profile') || '{}') || {}; } catch (e) { s = {}; }
+    const p = Object.assign({ name: '', sex: 'male', age: 26, height: 178, weight: 72, target: 68, goal: 'muscle', activity: 'moderate', days: 4 }, s);
+    const goals = { lose: ['Lose weight', -500, 2.2], gain: ['Gain weight', 500, 1.8], muscle: ['Build muscle', 300, 2.0], maintain: ['Maintain', 0, 1.6], recomp: ['Recomp', -200, 2.2] };
+    const acts = { sedentary: 1.2, light: 1.375, moderate: 1.55, very: 1.725, athlete: 1.9 };
+    const g = goals[p.goal] || goals.muscle;
+    const bmr = 10 * p.weight + 6.25 * p.height - 5 * p.age + (p.sex === 'male' ? 5 : -161);
+    const kcal = Math.max(p.sex === 'male' ? 1500 : 1200, Math.round((bmr * (acts[p.activity] || 1.55) + g[1]) / 10) * 10);
+    return { p, goalLabel: g[0], kcal, protein: Math.round(g[2] * p.weight), water: (Math.round(p.weight * 0.035 * 2) / 2).toFixed(1) };
+  }
+  renderVals() {
+    const pl = this.plan();
+    const name = pl.p.name || 'Athlete';
+    const list = [
+      { id: 'workout', name: 'Complete workout', detail: 'Push day · 55 min', streak: 23 },
+      { id: 'water', name: 'Drink ' + pl.water + ' L water', detail: '2.4 L logged', streak: 12 },
+      { id: 'sleep', name: 'Sleep 8 hours', detail: '7 h 52 m last night', streak: 5 },
+      { id: 'protein', name: 'Hit ' + pl.protein + ' g protein', detail: Math.round(pl.protein * 0.6) + ' g so far', streak: 9 },
+      { id: 'steps', name: '10,000 steps', detail: '4,210 so far', streak: 3 }
+    ];
+    const done = this.state.done;
+    const habits = list.map((h) => {
+      const on = !!done[h.id];
+      return { ...h, done: on,
+        toggle: () => this.setState({ done: { ...this.state.done, [h.id]: !this.state.done[h.id] } }),
+        rowStyle: 'display:flex;align-items:center;gap:14px;min-height:64px;padding:12px 14px;border-radius:16px;width:100%;box-sizing:border-box;' + (on ? 'border:1px solid var(--accentInk);background:var(--accentSoft);' : 'border:1px solid var(--line);background:var(--surface);'),
+        boxStyle: 'width:28px;height:28px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-sizing:border-box;' + (on ? 'background:var(--accentInk);color:var(--bg);' : 'border:2px solid var(--muted);') };
+    });
+    const week = ['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((l, i) => ({
+      label: l, done: i < 2,
+      style: 'width:32px;height:32px;border-radius:16px;display:flex;align-items:center;justify-content:center;box-sizing:border-box;' + (i < 2 ? 'background:#0E0F0C;color:var(--accent);' : i === 2 ? 'border:2px dashed #0E0F0C;' : 'border:2px solid rgba(14,15,12,0.25);')
+    }));
+    const eaten = Math.round(pl.kcal * 0.52 / 10) * 10;
+    const fmt = (n) => n.toLocaleString('en-US');
+    const splits = { 2: 'Full body', 3: 'Full body', 4: 'Upper / Lower', 5: 'PPL + U/L', 6: 'PPL ×2', 7: 'PPL ×2' };
+    return {
+      vars: this.theme().vars,
+      name, initial: name.charAt(0).toUpperCase(),
+      dateLabel: 'Wednesday, 25 Nov',
+      split: pl.p.days + ' days/week · ' + (splits[pl.p.days] || 'Upper / Lower'),
+      goalLabel: pl.goalLabel,
+      kcal: fmt(pl.kcal), eaten: fmt(eaten), left: fmt(pl.kcal - eaten),
+      kcalBar: 'height:100%;width:52%;border-radius:4px;background:var(--accentInk)',
+      protein: pl.protein, proteinEaten: Math.round(pl.protein * 0.6),
+      habits, week, total: list.length, doneCount: list.filter((h) => done[h.id]).length
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MuscleX · Live workout</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="{{vars}} width: 390px; height: 844px; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; overflow: hidden">
+  <div style="padding: 52px 20px 14px; display: flex; flex-direction: column; gap: 14px; flex-shrink: 0; border-bottom: 1px solid var(--line)">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+      <a href="Home.dc.html" aria-label="Close workout" style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); color: var(--text); display: flex; align-items: center; justify-content: center">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </a>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 2px">
+        <span style="font-size: 13px; font-weight: 600; color: var(--muted)">Push day</span>
+        <span style="font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums">{{elapsed}}</span>
+      </div>
+      <a href="WorkoutDone.dc.html" style="height: 44px; padding: 0 16px; border-radius: 22px; background: var(--accent); color: var(--onAccent); font-size: 14px; font-weight: 700; text-decoration: none; display: flex; align-items: center">Finish</a>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--muted)"><span>{{doneSets}} of {{totalSets}} sets</span><span>{{volume}} kg volume</span></div>
+      <div style="height: 6px; border-radius: 3px; background: var(--surface2); overflow: hidden"><div style="{{progressBar}}"></div></div>
+    </div>
+  </div>
+
+  <sc-if value="{{resting}}" hint-placeholder-val="{{ true }}">
+    <div style="margin: 12px 20px 0; padding: 12px 12px 12px 16px; border-radius: 16px; background: var(--strong); color: var(--onStrong); display: flex; align-items: center; gap: 10px; flex-shrink: 0">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>
+      <div style="display: flex; flex-direction: column; flex: 1">
+        <span style="font-size: 12px; font-weight: 600; opacity: 0.75">Rest</span>
+        <span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums">{{restLabel}}</span>
+      </div>
+      <button onClick="{{restMinus}}" aria-label="Rest 15 seconds less" style="height: 44px; padding: 0 10px; border-radius: 12px; border: 0; background: rgba(128,128,128,0.25); color: inherit; font-size: 13px; font-weight: 700">−15</button>
+      <button onClick="{{restPlus}}" aria-label="Rest 15 seconds more" style="height: 44px; padding: 0 10px; border-radius: 12px; border: 0; background: rgba(128,128,128,0.25); color: inherit; font-size: 13px; font-weight: 700">+15</button>
+      <button onClick="{{skipRest}}" style="height: 44px; padding: 0 12px; border-radius: 12px; border: 0; background: var(--accent); color: var(--onAccent); font-size: 13px; font-weight: 700">Skip</button>
+    </div>
+  </sc-if>
+
+  <div style="flex: 1; overflow-y: auto; padding: 14px 20px 28px; display: flex; flex-direction: column; gap: 12px">
+    <sc-for list="{{exercises}}" as="ex" hint-placeholder-count="5">
+      <div style="{{ex.cardStyle}}">
+        <button onClick="{{ex.toggle}}" aria-expanded="{{ex.open}}" style="display: flex; align-items: center; gap: 12px; width: 100%; min-height: 64px; padding: 12px 14px; border: 0; background: transparent; color: var(--text); text-align: left">
+          <div style="{{ex.badge}}">{{ex.num}}</div>
+          <div style="display: flex; flex-direction: column; gap: 2px; flex: 1">
+            <span style="font-size: 16px; font-weight: 700">{{ex.name}}</span>
+            <span style="font-size: 12px; color: var(--muted)">{{ex.summary}}</span>
+          </div>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="{{ex.chev}}"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <sc-if value="{{ex.open}}" hint-placeholder-val="{{ false }}">
+          <div style="padding: 0 14px 14px; display: flex; flex-direction: column; gap: 6px">
+            <div style="display: grid; grid-template-columns: 36px minmax(0, 1fr) 64px 56px 48px; gap: 8px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; padding: 0 4px">
+              <span>Set</span><span>Previous</span><span>kg</span><span>Reps</span><span></span>
+            </div>
+            <sc-for list="{{ex.sets}}" as="st" hint-placeholder-count="3">
+              <div style="{{st.row}}">
+                <span style="font-weight: 700">{{st.n}}</span>
+                <span style="color: var(--muted); font-size: 13px">{{st.prev}}</span>
+                <span style="height: 36px; border-radius: 10px; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-weight: 700">{{st.kg}}</span>
+                <span style="height: 36px; border-radius: 10px; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-weight: 700">{{st.reps}}</span>
+                <button onClick="{{st.toggle}}" aria-pressed="{{st.done}}" aria-label="{{st.label}}" style="{{st.check}}">
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>
+                </button>
+              </div>
+            </sc-for>
+            <button onClick="{{ex.addSet}}" style="height: 44px; margin-top: 4px; border-radius: 12px; border: 1px dashed var(--line); background: transparent; color: var(--text); font-size: 14px; font-weight: 600">+ Add set</button>
+          </div>
+        </sc-if>
+      </div>
+    </sc-for>
+    <a href="Exercises.dc.html" style="height: 52px; border-radius: 16px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font-size: 15px; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center">+ Add exercise</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"accent":{"editor":"color","default":"#C6F432","options":["#C6F432","#FF8A4C","#7CC8FF","#E9B8FF"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const mk = (prevKg, prevReps, kg, reps, count, doneCount) => Array.from({ length: count }, (_, i) => ({ prev: prevKg + ' × ' + prevReps, kg, reps, done: i < doneCount }));
+    this.state = {
+      elapsed: 1458, rest: 72, open: 0,
+      exercises: [
+        { name: 'Bench press', sets: mk(80, 8, 82.5, 8, 4, 2) },
+        { name: 'Overhead press', sets: mk(45, 8, 45, 8, 3, 0) },
+        { name: 'Incline dumbbell press', sets: mk(26, 10, 26, 10, 3, 0) },
+        { name: 'Lateral raise', sets: mk(10, 15, 10, 15, 3, 0) },
+        { name: 'Triceps pushdown', sets: mk(30, 12, 32.5, 12, 4, 0) }
+      ]
+    };
+  }
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.setState({ elapsed: this.state.elapsed + 1, rest: Math.max(0, this.state.rest - 1) });
+    }, 1000);
+  }
+  componentWillUnmount() { clearInterval(this.timer); }
+  theme() {
+    let p = {};
+    try { p = JSON.parse(window.localStorage.getItem('musclex.prefs') || '{}') || {}; } catch (e) { p = {}; }
+    const mode = this.props.theme || p.theme || 'dark';
+    const accent = this.props.accent || p.accent || '#C6F432';
+    const n = parseInt(accent.slice(1), 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    const dk = (v) => Math.round(v * 0.48).toString(16).padStart(2, '0');
+    const light = mode === 'light';
+    const T = light
+      ? { bg: '#F5F5F0', surface: '#FFFFFF', surface2: '#ECEDE6', line: '#DEDFD6', text: '#141512', muted: '#5E6158', nav: '#FFFFFF', strong: '#141512', onStrong: '#FFFFFF', flame: '#C2410C', flameSoft: '#FDE7DA', sky: '#1D5FA3', violet: '#7A3FA0' }
+      : { bg: '#0E0F0C', surface: '#1A1C17', surface2: '#24271F', line: '#2A2D25', text: '#F2F2EE', muted: '#A3A69C', nav: '#121310', strong: '#F2F2EE', onStrong: '#0E0F0C', flame: '#FF8A4C', flameSoft: '#2A1A10', sky: '#7CC8FF', violet: '#E9B8FF' };
+    const vars = Object.keys(T).map((k) => '--' + k + ':' + T[k]).join(';') + ';--accent:' + accent + ';--accentInk:' + (light ? '#' + dk(r) + dk(g) + dk(b) : accent) + ';--accentSoft:rgba(' + r + ',' + g + ',' + b + ',' + (light ? 0.18 : 0.14) + ');--onAccent:#0E0F0C;';
+    return { vars, mode, accent, light };
+  }
+  renderVals() {
+    const st = this.state;
+    const mmss = (t) => Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0');
+    const hms = (t) => String(Math.floor(t / 3600)).padStart(1, '0') + ':' + String(Math.floor((t % 3600) / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0');
+    let doneSets = 0, totalSets = 0, volume = 0;
+    const exercises = st.exercises.map((ex, ei) => {
+      const open = st.open === ei;
+      const d = ex.sets.filter((s) => s.done).length;
+      doneSets += d; totalSets += ex.sets.length;
+      ex.sets.forEach((s) => { if (s.done) volume += s.kg * s.reps; });
+      const complete = d === ex.sets.length;
+      return {
+        name: ex.name, num: complete ? '✓' : String(ei + 1), open,
+        summary: d + ' / ' + ex.sets.length + ' sets · ' + ex.sets[0].kg + ' kg × ' + ex.sets[0].reps,
+        cardStyle: 'border-radius:18px;overflow:hidden;' + (open ? 'border:1px solid var(--accentInk);background:var(--surface);' : 'border:1px solid var(--line);background:var(--surface);'),
+        badge: 'width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:\'Space Grotesk\',sans-serif;font-weight:700;font-size:15px;' + (complete ? 'background:var(--accentInk);color:var(--bg);' : 'background:var(--surface2);color:var(--text);'),
+        chev: (open ? 'transform:rotate(180deg);' : '') + 'color:var(--muted)',
+        toggle: () => this.setState({ open: this.state.open === ei ? -1 : ei }),
+        addSet: () => {
+          const list = this.state.exercises.map((x, i) => i !== ei ? x : { ...x, sets: x.sets.concat([{ ...x.sets[x.sets.length - 1], done: false }]) });
+          this.setState({ exercises: list });
+        },
+        sets: ex.sets.map((s, si) => ({
+          n: si + 1, prev: s.prev, kg: s.kg, reps: s.reps, done: s.done,
+          label: (s.done ? 'Undo set ' : 'Complete set ') + (si + 1),
+          row: 'display:grid;grid-template-columns:36px minmax(0,1fr) 64px 56px 48px;gap:8px;align-items:center;padding:4px;border-radius:12px;font-size:15px;' + (s.done ? 'background:var(--accentSoft);' : ''),
+          check: 'width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;' + (s.done ? 'border:0;background:var(--accentInk);color:var(--bg);' : 'border:1px solid var(--line);background:var(--surface2);color:var(--muted);'),
+          toggle: () => {
+            const list = this.state.exercises.map((x, i) => i !== ei ? x : { ...x, sets: x.sets.map((y, j) => j !== si ? y : { ...y, done: !y.done }) });
+            this.setState({ exercises: list, rest: s.done ? this.state.rest : 90 });
+          }
+        }))
+      };
+    });
+    return {
+      vars: this.theme().vars,
+      elapsed: hms(st.elapsed),
+      exercises, doneSets, totalSets,
+      volume: Math.round(volume).toLocaleString('en-US'),
+      progressBar: 'height:100%;border-radius:3px;background:var(--accentInk);width:' + Math.round((doneSets / Math.max(1, totalSets)) * 100) + '%',
+      resting: st.rest > 0,
+      restLabel: mmss(st.rest),
+      restMinus: () => this.setState({ rest: Math.max(0, this.state.rest - 15) }),
+      restPlus: () => this.setState({ rest: this.state.rest + 15 }),
+      skipRest: () => this.setState({ rest: 0 })
+    };
+  }
+}
+</script>
+</body>
+</html>
